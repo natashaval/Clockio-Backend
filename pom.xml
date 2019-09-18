@@ -12,6 +12,7 @@
     <module>clockio-entity</module>
     <module>clockio-repository</module>
     <module>clockio-service</module>
+    <module>clockio-service-impl</module>
     <module>clockio-web</module>
     <module>clockio-web-model</module>
   </modules>
@@ -65,6 +66,11 @@
       <dependency>
         <groupId>com.future</groupId>
         <artifactId>clockio-service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.future</groupId>
+        <artifactId>clockio-service-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

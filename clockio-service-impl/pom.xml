@@ -9,10 +9,14 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>clockio-service</artifactId>
+  <artifactId>clockio-service-impl</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <dependencies>
+    <dependency>
+      <groupId>com.future</groupId>
+      <artifactId>clockio-service</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.future</groupId>
       <artifactId>clockio-repository</artifactId>
