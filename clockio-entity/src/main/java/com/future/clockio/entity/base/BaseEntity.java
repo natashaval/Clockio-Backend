@@ -26,6 +26,4 @@ public class BaseEntity {
 
   @LastModifiedBy
   private String updatedBy;
-
-  private boolean deleted;
 }

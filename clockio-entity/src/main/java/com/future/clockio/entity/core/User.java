@@ -1,4 +1,4 @@
-package com.future.clockio.entity;
+package com.future.clockio.entity.core;
 
 import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
