@@ -1,6 +1,10 @@
 package com.future.clockio.entity;
 
+import com.future.clockio.entity.constant.DocumentName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,7 +20,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@Document(collection = "users")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Document(collection = DocumentName.USER)
 public class User implements UserDetails {
   @Id
   private String id;
@@ -27,10 +34,6 @@ public class User implements UserDetails {
 
   @NotEmpty
   private List<String> roles = new ArrayList<>();
-
-  public enum Role {
-    ROLE_ADMIN, ROLE_USER;
-  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
