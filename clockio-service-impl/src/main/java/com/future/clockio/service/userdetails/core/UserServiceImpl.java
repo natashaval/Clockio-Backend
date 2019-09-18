@@ -1,4 +1,4 @@
-package com.future.clockio.service.impl.core;
+package com.future.clockio.service.userdetails.core;
 
 import com.future.clockio.entity.core.User;
 import com.future.clockio.repository.core.UserRepository;

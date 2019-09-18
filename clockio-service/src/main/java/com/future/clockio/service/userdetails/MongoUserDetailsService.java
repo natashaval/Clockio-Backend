@@ -1,4 +1,4 @@
-package com.future.clockio.service.impl;
+package com.future.clockio.service.userdetails;
 
 import com.future.clockio.repository.core.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

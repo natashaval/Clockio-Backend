@@ -1,6 +1,6 @@
 package com.future.clockio.config.oauth;
 
-import com.future.clockio.service.impl.MongoUserDetailsService;
+import com.future.clockio.service.userdetails.MongoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
