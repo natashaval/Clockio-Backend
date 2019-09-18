@@ -30,18 +30,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   CorsFilter corsFilter;
 
-  @Autowired
-  public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication()
-            .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN", "USER").and()
-            .withUser("user").password("user").roles("USER");
-  }
-
-//  @Override
-//  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//    auth.userDetailsService(userDetailsService)
-//            .passwordEncoder(passwordEncoder);
+//  @Autowired
+//  public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+//    auth.inMemoryAuthentication()
+//            .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN", "USER").and()
+//            .withUser("user").password(passwordEncoder.encode("user")).roles("USER");
 //  }
+
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder);
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -61,9 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/swagger-resources/**")
             .permitAll()
             .anyRequest().authenticated()
-            .and()
-            .httpBasic()
-            .realmName("CLOCK_REALM")
             .and()
             .addFilterBefore(corsFilter, ChannelProcessingFilter.class);
   }
