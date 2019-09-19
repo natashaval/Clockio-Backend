@@ -35,6 +35,8 @@ public class Employee extends BaseEntity {
 
   private String photoUrl;
 
+  private String faceListId;
+
   private Location lastLocation;
 
   private Date lastCheckIn;
