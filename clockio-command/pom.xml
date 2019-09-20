@@ -18,6 +18,10 @@
       <artifactId>clockio-repository</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.future</groupId>
+      <artifactId>clockio-web-model</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.cloudinary</groupId>
       <artifactId>cloudinary-http44</artifactId>
     </dependency>
