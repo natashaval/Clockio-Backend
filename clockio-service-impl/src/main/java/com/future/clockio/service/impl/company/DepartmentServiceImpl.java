@@ -1,4 +1,4 @@
-package com.future.clockio.service.userdetails.company;
+package com.future.clockio.service.impl.company;
 
 import com.future.clockio.entity.company.Department;
 import com.future.clockio.exception.DataNotFoundException;

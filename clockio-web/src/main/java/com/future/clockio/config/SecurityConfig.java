@@ -1,7 +1,7 @@
 package com.future.clockio.config;
 
 import com.future.clockio.config.filter.CorsFilter;
-import com.future.clockio.service.userdetails.MongoUserDetailsService;
+import com.future.clockio.service.helper.MongoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
