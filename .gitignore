@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Resource ###
+/clockio-web/src/main/resources/*
