@@ -1,5 +1,6 @@
 package com.future.clockio.entity.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,8 @@ public class Department {
 
   private String name;
 
-  @DBRef(lazy = true)
-  private Branch branch;
+//  @DBRef(lazy = true)
+//  private Branch branch;
+
+  private String branchId;
 }
