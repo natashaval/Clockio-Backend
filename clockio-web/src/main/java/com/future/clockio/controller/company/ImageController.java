@@ -1,7 +1,7 @@
 package com.future.clockio.controller.company;
 
 import com.future.clockio.command.ImageUploadCommand;
-import com.future.clockio.request.ImageUploadRequest;
+import com.future.clockio.request.company.ImageUploadRequest;
 import com.future.clockio.response.company.ImageUploadResponse;
 import com.future.clockio.service.core.CommandExecutorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping(value = "/api/admin/employee/images")
+@RequestMapping(value = "/api/employee/images")
 public class ImageController {
   @Autowired
   private CommandExecutorService commandExecutor;

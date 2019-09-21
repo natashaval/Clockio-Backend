@@ -44,7 +44,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   @Override
   public BaseResponse createDepartment(Department department) {
-    Optional.of(copyProperties(department, new Department()))
+    Optional.of(department)
             .map(departmentRepository::save)
             .orElseThrow(() -> new InvalidRequestException("Failed in create new department!"));
     return BaseResponse.success("Department is added!");
@@ -56,8 +56,8 @@ public class DepartmentServiceImpl implements DepartmentService {
             .map(departmentRepository::findById)
             .orElseThrow(() -> new DataNotFoundException("Department not found!"))
             .map(existDepartment -> this.copyProperties(department, existDepartment))
-            .map(departmentRepository::save);
-//            .orElse(department);
+            .map(departmentRepository::save)
+            .orElse(department);
 
     return BaseResponse.success("Department is updated!");
   }

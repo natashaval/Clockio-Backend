@@ -5,7 +5,7 @@ import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.future.clockio.command.ImageUploadCommand;
-import com.future.clockio.request.ImageUploadRequest;
+import com.future.clockio.request.company.ImageUploadRequest;
 import com.future.clockio.response.company.ImageUploadResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
