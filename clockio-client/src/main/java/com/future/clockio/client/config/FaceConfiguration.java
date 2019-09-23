@@ -15,7 +15,6 @@ public class FaceConfiguration {
   @Bean // applicable to Feign
   public RequestInterceptor requestInterceptor() {
     return requestTemplate -> {
-      requestTemplate.header("Content-Type", "application/json");
       requestTemplate.header("Ocp-Apim-Subscription-Key", key);
     };
   }
@@ -23,5 +22,10 @@ public class FaceConfiguration {
   @Bean
   Logger.Level feignLoggerLevel() {
     return Logger.Level.BASIC;
+  }
+
+  @Bean
+  public FeignErrorDecoder errorDecoder() {
+    return new FeignErrorDecoder();
   }
 }

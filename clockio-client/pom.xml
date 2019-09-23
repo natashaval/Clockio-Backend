@@ -14,6 +14,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.future</groupId>
+      <artifactId>clockio-web-model</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
