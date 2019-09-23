@@ -1,12 +1,12 @@
 package com.future.clockio.controller.core;
 
 import com.future.clockio.client.FaceListClient;
-import com.future.clockio.client.model.FaceListResponse;
+import com.future.clockio.client.model.request.FaceListRequest;
+import com.future.clockio.client.model.response.FaceListResponse;
+import com.future.clockio.response.base.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,10 +15,36 @@ import java.util.List;
 public class FaceListController {
 
   @Autowired
-  private FaceListClient faceListClient;
+  private FaceListClient client;
 
   @GetMapping
   public List<FaceListResponse> getFaceList(){
-    return faceListClient.getFaceList();
+    return client.listFaceList();
+  }
+
+  @GetMapping(value = "/{faceListId}")
+  public FaceListResponse getFaceList(@PathVariable("faceListId") String faceListId) {
+    return client.getFaceList(faceListId);
+  }
+
+  @PutMapping(value = "/{faceListId}")
+  public ResponseEntity<BaseResponse> createFaceList(@PathVariable("faceListId") String faceListId,
+                                                     @RequestBody FaceListRequest request) {
+    client.createFaceList(faceListId, request);
+    return ResponseEntity.ok(BaseResponse.success("Face List created!"));
+  }
+
+  @PatchMapping(value = "/{faceListId}")
+  public ResponseEntity<BaseResponse> updateFaceList(@PathVariable("faceListId") String faceListId,
+                             @RequestBody FaceListRequest request) {
+    client.updateFaceList(faceListId, request);
+    return ResponseEntity.ok(BaseResponse.success("Face List updated!"));
+  }
+
+  @DeleteMapping(value = "/{faceListId}")
+  public ResponseEntity<BaseResponse> deleteFaceList(@PathVariable(
+          "faceListId") String faceListId) {
+    client.deleteFaceList(faceListId);
+    return ResponseEntity.ok(BaseResponse.success("Face List deleted!"));
   }
 }
