@@ -15,6 +15,10 @@
   <dependencies>
     <dependency>
       <groupId>com.future</groupId>
+      <artifactId>clockio-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.future</groupId>
       <artifactId>clockio-service</artifactId>
     </dependency>
     <dependency>
