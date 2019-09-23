@@ -1,5 +1,6 @@
 package com.future.clockio.config.oauth;
 
+import com.future.clockio.service.helper.MongoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +9,10 @@ import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -18,10 +22,13 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class OAuthTokenConfig {
   private String privateKey = "private-key";
   private String publicKey = "public-key";
-  private String signingKey = "my-secret-key";
+  private static final String SIGN_KEY = "my-secret-key";
 
   @Autowired
   private ClientDetailsService clientDetailsService;
+
+  @Autowired
+  private MongoUserDetailsService userDetailsService;
 
   @Bean
   public TokenStore tokenStore() {
@@ -31,10 +38,18 @@ public class OAuthTokenConfig {
   @Bean
   public JwtAccessTokenConverter tokenEnhancer() {
     JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-    converter.setSigningKey(signingKey);
-//    converter.setSigningKey(privateKey);
-//    converter.setVerifierKey(publicKey);
+    converter.setSigningKey(SIGN_KEY);
+    ((DefaultAccessTokenConverter) converter.getAccessTokenConverter())
+            .setUserTokenConverter(userAuthenticationConverter());
     return converter;
+  }
+
+//  https://stackoverflow.com/questions/54279755/getprincipal-method-returning-username-instead-of-userdetails
+  @Bean
+  public UserAuthenticationConverter userAuthenticationConverter() {
+    DefaultUserAuthenticationConverter defaultUserAuthenticationConverter = new DefaultUserAuthenticationConverter();
+    defaultUserAuthenticationConverter.setUserDetailsService(userDetailsService);
+    return defaultUserAuthenticationConverter;
   }
 
 

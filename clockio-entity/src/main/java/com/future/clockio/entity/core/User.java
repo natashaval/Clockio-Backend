@@ -1,5 +1,6 @@
 package com.future.clockio.entity.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,13 +48,18 @@ public class User implements UserDetails {
   }
 
   @Transient
+  @JsonIgnore
   private boolean enabled = true;
   @Transient
+  @JsonIgnore
   private boolean accountNonExpired = true;
   @Transient
+  @JsonIgnore
   private boolean accountNonLocked = true;
   @Transient
+  @JsonIgnore
   private boolean credentialsNonExpired = true;
   @Transient
+  @JsonIgnore
   private Collection<? extends GrantedAuthority> authorities;
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/admin/branches")
+@RequestMapping(value = "/api/branches")
 public class BranchController {
 
   private BranchService branchService;

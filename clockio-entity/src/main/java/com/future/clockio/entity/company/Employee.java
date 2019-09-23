@@ -1,5 +1,6 @@
 package com.future.clockio.entity.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.constant.DocumentName;
 import com.future.clockio.entity.constant.Status;
@@ -12,12 +13,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value = {"target"})
 @Document(collection = DocumentName.EMPLOYEE)
 public class Employee extends BaseEntity {
   @Id
@@ -33,7 +37,9 @@ public class Employee extends BaseEntity {
 
   private String email;
 
-  private String photoUrl;
+  private String profileUrl; // set profile picture Url from cloudinary
+
+  private List<String> photoUrl = new ArrayList<>(); // list of trained face
 
   private String faceListId;
 
