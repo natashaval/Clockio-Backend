@@ -76,28 +76,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   private Employee copyProperties(EmployeeCreateRequest request,
                                   Employee targetEmployee,
-                                  Boolean isUpdate) {
+                                  boolean isUpdate) {
     targetEmployee.setFirstName(request.getFirstName());
     targetEmployee.setLastName(request.getLastName());
     targetEmployee.setEmail(request.getEmail());
     targetEmployee.setPhone(request.getPhone());
-    targetEmployee.setPhotoUrl(request.getPhotoUrl());
-    targetEmployee.setFaceListId(request.getFaceListId());
+//    targetEmployee.setPhotoUrl(request.getPhotoUrl());
+    if (!isUpdate) targetEmployee.setFaceListId(
+            request.getLastName().toLowerCase() + "_" + request.getFirstName().toLowerCase()
+    ); // set face list id
 
-    if (isUpdate) {
-      if (targetEmployee.getBranch() == null ||
-              !request.getBranchId().equals(targetEmployee.getBranch().getId())) {
-        targetEmployee.setBranch(branchRepository.findById(request.getBranchId())
-                .orElseThrow(() -> new DataNotFoundException("Branch not found!"))
-        );
-      }
+    if (targetEmployee.getBranch() == null ||
+            !request.getBranchId().equals(targetEmployee.getBranch().getId())) {
+      targetEmployee.setBranch(branchRepository.findById(request.getBranchId())
+              .orElseThrow(() -> new DataNotFoundException("Branch not found!"))
+      );
+    }
 
-      if (targetEmployee.getDepartment() == null ||
-              !request.getDepartmentId().equals(targetEmployee.getDepartment().getId())) {
-        targetEmployee.setDepartment(departmentRepository.findById(request.getDepartmentId())
-                .orElseThrow(() -> new DataNotFoundException("Department not found!"))
-        );
-      }
+    if (targetEmployee.getDepartment() == null ||
+            !request.getDepartmentId().equals(targetEmployee.getDepartment().getId())) {
+      targetEmployee.setDepartment(departmentRepository.findById(request.getDepartmentId())
+              .orElseThrow(() -> new DataNotFoundException("Department not found!"))
+      );
     }
 
     return targetEmployee;
