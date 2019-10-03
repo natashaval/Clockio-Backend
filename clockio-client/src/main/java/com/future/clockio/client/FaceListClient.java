@@ -21,7 +21,8 @@ public interface FaceListClient {
   public List<FaceListResponse> listFaceList();
 
   @GetMapping(value = "/{faceListId}")
-  public FaceListResponse getFaceList(@PathVariable("faceListId") String faceListId);
+  public FaceListResponse getFaceList(@PathVariable("faceListId") String faceListId,
+                                      @RequestParam("returnRecognitionModel") boolean returnRecognitionModel);
 
   @PutMapping(value = "/{faceListId}")
   public void createFaceList(@PathVariable("faceListId") String faceListId,

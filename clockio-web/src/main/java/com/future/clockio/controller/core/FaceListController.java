@@ -26,7 +26,7 @@ public class FaceListController {
 
   @GetMapping(value = "/{faceListId}")
   public FaceListResponse getFaceList(@PathVariable("faceListId") String faceListId) {
-    return client.getFaceList(faceListId);
+    return client.getFaceList(faceListId, true);
   }
 
   @PutMapping(value = "/{faceListId}")

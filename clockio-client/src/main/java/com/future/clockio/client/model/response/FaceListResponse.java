@@ -11,5 +11,6 @@ public class FaceListResponse {
   private String faceListId;
   private String name;
   private String userData;
+  private String recognitionModel;
   private List<Object> persistedFaces;
 }

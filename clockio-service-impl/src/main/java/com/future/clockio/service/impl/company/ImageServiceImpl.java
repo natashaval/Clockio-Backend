@@ -39,6 +39,7 @@ public class ImageServiceImpl implements ImageService {
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
 
     request.setFaceListId(employee.getFaceListId());
+    request.setPersisted(true);
     ImageUploadResponse imageResponse =
             commandExecutor.executeCommand(ImageUploadCommand.class, request);
     log.info("Image Upload Response" + imageResponse);

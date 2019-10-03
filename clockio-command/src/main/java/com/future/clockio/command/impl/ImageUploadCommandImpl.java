@@ -31,7 +31,7 @@ public class ImageUploadCommandImpl implements ImageUploadCommand {
 
   @Override
   public ImageUploadResponse execute(ImageUploadRequest request) {
-    ImageUploadResponse response = new ImageUploadResponse();
+    ImageUploadResponse response;
     try {
       Transformation transformation = new Transformation()
               .width(400).height(600).gravity("face").crop("crop");
@@ -39,7 +39,7 @@ public class ImageUploadCommandImpl implements ImageUploadCommand {
               .upload(request.getFile().getBytes(), ObjectUtils.asMap(
                       "public_id", request.getEmployeeId() + "_" + UUID.randomUUID().toString(),
                       "tags", request.getFaceListId(),
-                      "folder", "Profile",
+                      "folder", request.isPersisted() ? "Profile" : "Presence",
                       "unique_filename", true,
                       "transformation", transformation
               ));
