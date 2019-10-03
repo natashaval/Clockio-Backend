@@ -1,7 +1,7 @@
 package com.future.clockio.config;
 
 import com.future.clockio.config.filter.CorsFilter;
-import com.future.clockio.service.impl.MongoUserDetailsService;
+import com.future.clockio.service.helper.MongoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/swagger-ui.html",
                     "/v2/api-docs",
                     "/docs",
-                    "/swagger-resources/**")
+                    "/swagger-resources/**",
+                    "/webjars/**")
             .permitAll()
             .anyRequest().authenticated()
             .and()

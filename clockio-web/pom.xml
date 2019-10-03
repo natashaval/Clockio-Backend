@@ -15,7 +15,15 @@
   <dependencies>
     <dependency>
       <groupId>com.future</groupId>
+      <artifactId>clockio-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.future</groupId>
       <artifactId>clockio-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.future</groupId>
+      <artifactId>clockio-service-impl</artifactId>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
@@ -37,8 +45,10 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-jwt</artifactId>
     </dependency>
-
-
+    <dependency>
+      <groupId>com.cloudinary</groupId>
+      <artifactId>cloudinary-http44</artifactId>
+    </dependency>
 
   </dependencies>
 

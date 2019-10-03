@@ -3,6 +3,7 @@ package com.future.clockio.controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,12 @@ public class HelloController {
   @GetMapping("/api/x")
   public String apix() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    return "You are here! after Bearer Authorization!" + auth.getName(); }
+    return "You are here! after Bearer Authorization!" + auth.getName();
+  }
+
+  @GetMapping("/api/profile")
+  public Object getProfile() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    return auth.getPrincipal();
+  }
 }
