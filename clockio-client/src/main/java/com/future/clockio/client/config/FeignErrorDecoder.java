@@ -50,14 +50,14 @@ public class FeignErrorDecoder implements ErrorDecoder {
 
     switch (response.status()) {
       case 404:
-        return new DataNotFoundException(message.getError().getCode().toUpperCase() +
-                "--" + message.getError().getMessage());
+        return new DataNotFoundException(message.getError().getCode() +
+                " -- " + message.getError().getMessage());
       case 429:
-        return new RateLimitException(message.getError().getCode().toUpperCase() +
-                "--" + message.getError().getMessage());
+        return new RateLimitException(message.getError().getCode() +
+                " -- " + message.getError().getMessage());
       default:
-        return new InvalidRequestException(message.getError().getCode().toUpperCase() +
-                "--" + message.getError().getMessage());
+        return new InvalidRequestException(message.getError().getCode() +
+                " -- " + message.getError().getMessage());
     }
 
 //    return errorDecoder.decode(s, response);

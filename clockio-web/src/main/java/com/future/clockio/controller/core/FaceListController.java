@@ -1,7 +1,9 @@
 package com.future.clockio.controller.core;
 
 import com.future.clockio.client.FaceListClient;
+import com.future.clockio.client.model.request.AddFaceRequest;
 import com.future.clockio.client.model.request.FaceListRequest;
+import com.future.clockio.client.model.response.AddFaceResponse;
 import com.future.clockio.client.model.response.FaceListResponse;
 import com.future.clockio.response.base.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,15 @@ public class FaceListController {
           "faceListId") String faceListId) {
     client.deleteFaceList(faceListId);
     return ResponseEntity.ok(BaseResponse.success("Face List deleted!"));
+  }
+
+  @PostMapping(value = "/{faceListId}/persistedFaces")
+  public BaseResponse addFace(@PathVariable("faceListId") String faceListId,
+                                 @RequestBody AddFaceRequest request) {
+    AddFaceResponse faceResponse = client.addFace(faceListId, request);
+    BaseResponse response = BaseResponse.success("Face Added!");
+    response.getDetails().put("persistedFaceId",
+            faceResponse.getPersistedFaceId());
+    return response;
   }
 }

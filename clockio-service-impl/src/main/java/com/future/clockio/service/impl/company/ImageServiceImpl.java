@@ -3,6 +3,7 @@ package com.future.clockio.service.impl.company;
 import com.future.clockio.command.ImageDestroyCommand;
 import com.future.clockio.command.ImageUploadCommand;
 import com.future.clockio.entity.company.Employee;
+import com.future.clockio.entity.company.Photo;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.repository.company.EmployeeRepository;
 import com.future.clockio.request.company.ImageDestroyRequest;
@@ -15,6 +16,8 @@ import com.future.clockio.service.core.CommandExecutorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -36,13 +39,19 @@ public class ImageServiceImpl implements ImageService {
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
 
     request.setFaceListId(employee.getFaceListId());
-    ImageUploadResponse response = commandExecutor.executeCommand(ImageUploadCommand.class, request);
-    log.info("Image Upload Response" + response);
-    if (!employee.getPhotoUrl().contains(response.getPublicId())) {
-      employee.getPhotoUrl().add(response.getPublicId());
+    ImageUploadResponse imageResponse =
+            commandExecutor.executeCommand(ImageUploadCommand.class, request);
+    log.info("Image Upload Response" + imageResponse);
+    Photo photo = new Photo();
+    photo.setPublicId(imageResponse.getPublicId());
+    photo.setUrl(imageResponse.getUrl());
+    if (!employee.getPhotoUrl().contains(photo)) {
+      employee.getPhotoUrl().add(photo);
     }
     employeeRepository.save(employee);
-    return BaseResponse.success("Employee Image uploaded!");
+    BaseResponse response = new BaseResponse(true, "Employee Image uploaded!");
+    response.getDetails().put("url", imageResponse.getUrl());
+    return response;
   }
 
   @Override
