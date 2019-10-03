@@ -8,4 +8,5 @@ public class ImageUploadRequest {
   private String employeeId;
   private String faceListId; // use as tag in cloudinary image (grouping)
   private MultipartFile file;
+  private boolean persisted;
 }

@@ -39,7 +39,7 @@ public class Employee extends BaseEntity {
 
   private String profileUrl; // set profile picture Url from cloudinary
 
-  private List<String> photoUrl = new ArrayList<>(); // list of trained face
+  private List<Photo> photoUrl = new ArrayList<>(); // list of trained face
 
   private String faceListId;
 
