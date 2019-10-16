@@ -1,23 +1,24 @@
 package com.future.clockio.entity.core;
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.base.Location;
-import com.future.clockio.entity.constant.DocumentName;
+import com.future.clockio.entity.base.Coordinates;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.NOTIFICATION)
+//@Document(collection = DocumentName.NOTIFICATION)
+@Entity
+@Table(name = "Notification")
 public class Notification extends BaseEntity {
 
   @Id
@@ -27,12 +28,14 @@ public class Notification extends BaseEntity {
 
   private String content;
 
-  private Location location;
+//  private Coordinates location;
+  private double latitude;
+  private double longitude;
 
   private Date startDate;
 
   private Date endDate;
 
-  private List<String> seenBy;
+//  private List<String> seenBy;
   // keep track of who has Seen Notification by employeeId;
 }

@@ -86,12 +86,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             request.getLastName().toLowerCase() + "_" + request.getFirstName().toLowerCase()
     ); // set face list id
 
-    if (targetEmployee.getBranch() == null ||
-            !request.getBranchId().equals(targetEmployee.getBranch().getId())) {
-      targetEmployee.setBranch(branchRepository.findById(request.getBranchId())
-              .orElseThrow(() -> new DataNotFoundException("Branch not found!"))
-      );
-    }
+//    if (targetEmployee.getBranch() == null ||
+//            !request.getBranchId().equals(targetEmployee.getBranch().getId())) {
+//      targetEmployee.setBranch(branchRepository.findById(request.getBranchId())
+//              .orElseThrow(() -> new DataNotFoundException("Branch not found!"))
+//      );
+//    }
 
     if (targetEmployee.getDepartment() == null ||
             !request.getDepartmentId().equals(targetEmployee.getDepartment().getId())) {

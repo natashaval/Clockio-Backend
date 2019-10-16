@@ -68,7 +68,9 @@ public class BranchServiceImpl implements BranchService {
     targetBranch.setName(branch.getName());
     targetBranch.setCountry(branch.getCountry());
     targetBranch.setCity(branch.getCity());
-    targetBranch.setLocation(branch.getLocation());
+//    targetBranch.setLocation(branch.getLocation());
+    targetBranch.setLatitude(branch.getLatitude());
+    targetBranch.setLongitude(branch.getLongitude());
     return targetBranch;
   }
 }

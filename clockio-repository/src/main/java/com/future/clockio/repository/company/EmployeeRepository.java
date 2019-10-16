@@ -1,7 +1,7 @@
 package com.future.clockio.repository.company;
 
 import com.future.clockio.entity.company.Employee;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmployeeRepository extends MongoRepository<Employee, String> {
+public interface EmployeeRepository extends JpaRepository<Employee, String> {
 }

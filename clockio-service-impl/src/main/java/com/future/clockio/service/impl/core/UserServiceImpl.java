@@ -1,5 +1,7 @@
 package com.future.clockio.service.impl.core;
 
+import com.future.clockio.entity.constant.Erole;
+import com.future.clockio.entity.core.Role;
 import com.future.clockio.entity.core.User;
 import com.future.clockio.repository.core.UserRepository;
 import com.future.clockio.service.core.UserService;
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
   private void setupDefaultUser() {
     if (userRepository.count() == 0) {
       userRepository.save(new User("admin", passwordEncoder.encode("admin"),
-              Arrays.asList("ROLE_ADMIN", "ROLE_USER")));
+              new Role(Erole.ROLE_ADMIN.toString())));
     }
   }
 }

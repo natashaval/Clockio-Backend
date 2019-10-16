@@ -6,21 +6,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.DEPARTMENT)
+//@Document(collection = DocumentName.DEPARTMENT)
+@Entity
+@Table(name = "Department")
 public class Department {
 
   @Id
   private String id;
 
   private String name;
+
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  private Branch branch;
 
 //  @DBRef(lazy = true)
 //  private Branch branch;

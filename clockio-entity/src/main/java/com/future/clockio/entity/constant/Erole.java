@@ -1,6 +1,6 @@
 package com.future.clockio.entity.constant;
 
-public enum Role {
+public enum Erole {
   ROLE_ADMIN,
   ROLE_USER
 }

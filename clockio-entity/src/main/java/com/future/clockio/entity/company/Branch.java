@@ -1,20 +1,23 @@
 package com.future.clockio.entity.company;
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.constant.DocumentName;
-import com.future.clockio.entity.base.Location;
+import com.future.clockio.entity.base.Coordinates;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.BRANCH)
+@Entity
+//@Document(collection = DocumentName.BRANCH)
+@Table(name = "Branch")
 public class Branch extends BaseEntity {
 
   @Id
@@ -26,5 +29,7 @@ public class Branch extends BaseEntity {
 
   private String country;
 
-  private Location location;
+//  private Coordinates location;
+  private double latitude;
+  private double longitude;
 }

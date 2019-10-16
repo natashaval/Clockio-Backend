@@ -2,30 +2,30 @@ package com.future.clockio.entity.core;
 
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.base.Location;
+import com.future.clockio.entity.base.Coordinates;
 import com.future.clockio.entity.company.Employee;
-import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.ACTIVITY)
+//@Document(collection = DocumentName.ACTIVITY)
+@Entity
+@Table(name = "Activity")
 public class Activity extends BaseEntity {
 
   @Id
   private String Id;
 
-  @DBRef(lazy = true)
+//  @DBRef(lazy = true)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Employee employee;
 
   private String title;
@@ -38,5 +38,7 @@ public class Activity extends BaseEntity {
 
   private String endTime;
 
-  private Location location;
+//  private Coordinates location;
+  private double latitude;
+  private double longitude;
 }
