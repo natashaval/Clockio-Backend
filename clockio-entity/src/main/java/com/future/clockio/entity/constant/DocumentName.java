@@ -9,5 +9,6 @@ public interface DocumentName {
 
   String WORK = "works";
   String ACTIVITY = "activities";
+  String LOCATION = "locations";
   String NOTIFICATION = "notifications";
 }

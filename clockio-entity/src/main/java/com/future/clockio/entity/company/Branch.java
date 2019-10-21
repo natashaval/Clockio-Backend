@@ -2,7 +2,7 @@ package com.future.clockio.entity.company;
 
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.constant.DocumentName;
-import com.future.clockio.entity.base.Location;
+import com.future.clockio.entity.base.Coordinate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,5 +26,5 @@ public class Branch extends BaseEntity {
 
   private String country;
 
-  private Location location;
+  private Coordinate coordinate;
 }

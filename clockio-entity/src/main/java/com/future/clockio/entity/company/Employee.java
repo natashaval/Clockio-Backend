@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.constant.DocumentName;
 import com.future.clockio.entity.constant.Status;
-import com.future.clockio.entity.base.Location;
+import com.future.clockio.entity.base.Coordinate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,7 +43,7 @@ public class Employee extends BaseEntity {
 
   private String faceListId;
 
-  private Location lastLocation;
+  private Coordinate lastCoordinate;
 
   private Date lastCheckIn;
 

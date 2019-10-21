@@ -1,6 +1,5 @@
 package com.future.clockio.entity.core;
 
-
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.base.Coordinate;
 import com.future.clockio.entity.company.Employee;
@@ -19,8 +18,8 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.ACTIVITY)
-public class Activity extends BaseEntity {
+@Document(collection = DocumentName.LOCATION)
+public class Location extends BaseEntity {
 
   @Id
   private String id;
@@ -28,15 +27,7 @@ public class Activity extends BaseEntity {
   @DBRef(lazy = true)
   private Employee employee;
 
-  private String title;
-
-  private String content;
-
-  private Date date;
-
-  private String startTime;
-
-  private String endTime;
-
   private Coordinate coordinate;
+
+  private Date timestamp;
 }

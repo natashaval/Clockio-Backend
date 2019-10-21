@@ -1,7 +1,7 @@
 package com.future.clockio.entity.core;
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.base.Location;
+import com.future.clockio.entity.base.Coordinate;
 import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +27,7 @@ public class Notification extends BaseEntity {
 
   private String content;
 
-  private Location location;
+  private Coordinate coordinate;
 
   private Date startDate;
 
