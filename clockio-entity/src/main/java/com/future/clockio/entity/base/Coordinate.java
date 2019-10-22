@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Coordinates {
+public class Coordinate {
 
 //  private String type;
 //  private String coordinates;

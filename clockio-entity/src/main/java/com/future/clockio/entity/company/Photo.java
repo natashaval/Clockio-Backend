@@ -22,6 +22,7 @@ public class Photo {
   private String publicId;
 
   private String url;
+  private boolean mainPhoto;
 
   @ManyToOne
   private Employee employee;

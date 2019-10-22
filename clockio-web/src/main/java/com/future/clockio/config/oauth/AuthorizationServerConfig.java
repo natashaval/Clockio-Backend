@@ -1,6 +1,6 @@
 package com.future.clockio.config.oauth;
 
-import com.future.clockio.service.helper.MongoUserDetailsService;
+import com.future.clockio.service.helper.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +43,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   private AuthenticationManager authenticationManager;
 
   @Autowired
-  private MongoUserDetailsService userDetailsService;
+  private CustomUserDetailsService userDetailsService;
 
   @Override
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

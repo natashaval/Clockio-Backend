@@ -1,15 +1,13 @@
 package com.future.clockio.entity.company;
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.base.Coordinates;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -21,7 +19,8 @@ import javax.persistence.Table;
 public class Branch extends BaseEntity {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
   private String name;
 
@@ -29,7 +28,7 @@ public class Branch extends BaseEntity {
 
   private String country;
 
-//  private Coordinates location;
+//  private Coordinate location;
   private double latitude;
   private double longitude;
 }

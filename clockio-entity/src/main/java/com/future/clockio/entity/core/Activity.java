@@ -2,7 +2,6 @@ package com.future.clockio.entity.core;
 
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.base.Coordinates;
 import com.future.clockio.entity.company.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,7 +37,7 @@ public class Activity extends BaseEntity {
 
   private String endTime;
 
-//  private Coordinates location;
+//  private Coordinate location;
   private double latitude;
   private double longitude;
 }

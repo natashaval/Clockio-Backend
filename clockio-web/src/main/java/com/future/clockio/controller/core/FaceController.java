@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/face")
@@ -29,7 +30,7 @@ public class FaceController {
   }
 
   @PostMapping(value = "/{id}/verify")
-  public BaseResponse findSimilar(@PathVariable("id") String id,
+  public BaseResponse findSimilar(@PathVariable("id") UUID id,
                                   @RequestParam("photo") MultipartFile photo) {
     ImageUploadRequest request = new ImageUploadRequest();
     request.setEmployeeId(id);

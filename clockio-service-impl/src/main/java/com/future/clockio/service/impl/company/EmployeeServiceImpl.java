@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -33,13 +34,13 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public Employee findById(String id) {
+  public Employee findById(UUID id) {
     return employeeRepository.findById(id)
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
   }
 
   @Override
-  public BaseResponse deleteById(String id) {
+  public BaseResponse deleteById(UUID id) {
     Employee exist = employeeRepository.findById(id)
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
     if (exist != null) {
@@ -58,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public BaseResponse updateEmployee(String id, EmployeeCreateRequest employee) {
+  public BaseResponse updateEmployee(UUID id, EmployeeCreateRequest employee) {
     Optional.of(id)
             .map(employeeRepository::findById)
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"))

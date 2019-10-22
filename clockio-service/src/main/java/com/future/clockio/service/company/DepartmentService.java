@@ -5,15 +5,16 @@ import com.future.clockio.entity.company.Department;
 import com.future.clockio.response.base.BaseResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DepartmentService {
-  Department findById(String id);
+  Department findById(UUID id);
 
-  BaseResponse deleteById(String id);
+  BaseResponse deleteById(UUID id);
 
   BaseResponse createDepartment(Department department);
 
-  BaseResponse updateDepartment(String id, Department department);
+  BaseResponse updateDepartment(UUID id, Department department);
 
   List<Department> findAll();
 }

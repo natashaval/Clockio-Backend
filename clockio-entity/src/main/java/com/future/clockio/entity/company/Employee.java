@@ -3,30 +3,29 @@ package com.future.clockio.entity.company;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.constant.Status;
-import com.future.clockio.entity.base.Coordinates;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(value = {"target"})
+//@JsonIgnoreProperties(value = {"target"})
 //@Document(collection = DocumentName.EMPLOYEE)
 @Entity
 @Table(name = "Employee")
 public class Employee extends BaseEntity {
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-  private Status status;
+  private String status;
 
   private String firstName;
 
@@ -42,7 +41,7 @@ public class Employee extends BaseEntity {
 
   private String faceListId;
 
-//  private Coordinates lastLocation;
+//  private Coordinate lastLocation;
   private double lastLatitude;
   private double lastLongitude;
 

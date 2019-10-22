@@ -1,7 +1,6 @@
 package com.future.clockio.entity.core;
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.base.Coordinates;
 import com.future.clockio.entity.company.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +22,7 @@ public class Location extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   private Employee employee;
 
-//  private Coordinates coordinates;
+//  private Coordinate coordinates;
   private double latitude;
   private double longitude;
 }
