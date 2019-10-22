@@ -20,6 +20,7 @@ import java.util.UUID;
 //@Document(collection = DocumentName.EMPLOYEE)
 @Entity
 @Table(name = "Employee")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Employee extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
