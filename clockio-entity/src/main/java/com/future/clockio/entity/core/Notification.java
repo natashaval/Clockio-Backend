@@ -27,7 +27,6 @@ public class Notification extends BaseEntity {
 
   private String content;
 
-//  private Coordinate location;
   private double latitude;
   private double longitude;
 

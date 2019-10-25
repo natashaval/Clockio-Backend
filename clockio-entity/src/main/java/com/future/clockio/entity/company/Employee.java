@@ -42,9 +42,8 @@ public class Employee extends BaseEntity {
 
   private String faceListId;
 
-//  private Coordinate lastLocation;
   private double lastLatitude;
-  private double lastLongitude;
+  private double lastLongitude;t
 
   private Date lastCheckIn;
 

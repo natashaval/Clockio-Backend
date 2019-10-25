@@ -21,7 +21,7 @@ import java.util.Date;
 public class Activity extends BaseEntity {
 
   @Id
-  private String Id;
+  private String id;
 
 //  @DBRef(lazy = true)
   @ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +37,6 @@ public class Activity extends BaseEntity {
 
   private String endTime;
 
-//  private Coordinate location;
   private double latitude;
   private double longitude;
 }

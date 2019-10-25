@@ -28,7 +28,6 @@ public class Branch extends BaseEntity {
 
   private String country;
 
-//  private Coordinate location;
   private double latitude;
   private double longitude;
 }
