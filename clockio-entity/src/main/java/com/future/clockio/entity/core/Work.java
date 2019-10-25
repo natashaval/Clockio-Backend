@@ -7,24 +7,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.WORK)
+//@Document(collection = DocumentName.WORK)
+@Entity
+@Table(name = "Work")
 public class Work extends BaseEntity {
   // Work's Done Today
 
   @Id
   private String id;
 
-  @DBRef(lazy = true)
+//  @DBRef(lazy = true)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private Employee employee;
 
   private Date checkIn;

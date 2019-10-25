@@ -5,15 +5,16 @@ import com.future.clockio.request.company.EmployeeCreateRequest;
 import com.future.clockio.response.base.BaseResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface EmployeeService {
-  Employee findById(String id);
+  Employee findById(UUID id);
 
-  BaseResponse deleteById(String id);
+  BaseResponse deleteById(UUID id);
 
   BaseResponse createEmployee(EmployeeCreateRequest employee);
 
-  BaseResponse updateEmployee(String id, EmployeeCreateRequest employee);
+  BaseResponse updateEmployee(UUID id, EmployeeCreateRequest employee);
 
   List<Employee> findAll();
 }

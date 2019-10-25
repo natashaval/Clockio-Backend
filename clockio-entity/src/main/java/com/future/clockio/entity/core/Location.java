@@ -1,33 +1,27 @@
 package com.future.clockio.entity.core;
 
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.base.Coordinate;
 import com.future.clockio.entity.company.Employee;
-import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
+import javax.persistence.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.LOCATION)
+@Entity
+@Table(name = "Location")
 public class Location extends BaseEntity {
-
   @Id
   private String id;
 
-  @DBRef(lazy = true)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Employee employee;
 
-  private Coordinate coordinate;
-
-  private Date timestamp;
+//  private Coordinate coordinates;
+  private double latitude;
+  private double longitude;
 }

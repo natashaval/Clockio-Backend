@@ -20,6 +20,13 @@ public class HelloController {
   @GetMapping("/about")
   public String printAbout() {return "This is an about page!"; }
 
+  @GetMapping("/test")
+  public Map<String,String> printTest() {
+    Map<String,String> test = new HashMap<>();
+    test.put("test", "Hasil dari Test");
+    return test;
+  }
+
   @GetMapping("/api/x")
   public String apix() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/branches")
@@ -24,7 +25,7 @@ public class BranchController {
   public List<Branch> getBranches() {return branchService.findAll();}
 
   @GetMapping(value = "/{id}")
-  public Branch getBranch(@PathVariable("id") String id) { return branchService.findById(id);}
+  public Branch getBranch(@PathVariable("id") UUID id) { return branchService.findById(id);}
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -33,12 +34,13 @@ public class BranchController {
   }
 
   @PutMapping(value = "/{id}")
-  public BaseResponse updateBranch(@PathVariable("id") String id, @RequestBody Branch branch) {
+  public BaseResponse updateBranch(@PathVariable("id") UUID id,
+                                   @RequestBody Branch branch) {
     return branchService.updateBranch(id, branch);
   }
 
   @DeleteMapping(value = "/{id}")
-  public BaseResponse deleteBranch(@PathVariable("id") String id) {
+  public BaseResponse deleteBranch(@PathVariable("id") UUID id) {
     return branchService.deleteById(id);
   }
 }

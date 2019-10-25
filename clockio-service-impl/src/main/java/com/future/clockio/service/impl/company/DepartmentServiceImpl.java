@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -26,13 +27,13 @@ public class DepartmentServiceImpl implements DepartmentService {
   }
 
   @Override
-  public Department findById(String id) {
+  public Department findById(UUID id) {
     return departmentRepository.findById(id)
             .orElseThrow(() -> new DataNotFoundException("Department not found!"));
   }
 
   @Override
-  public BaseResponse deleteById(String id) {
+  public BaseResponse deleteById(UUID id) {
     Department exist = departmentRepository.findById(id)
             .orElseThrow(() -> new DataNotFoundException("Department not found!"));
     if (exist != null) {
@@ -51,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentService {
   }
 
   @Override
-  public BaseResponse updateDepartment(String id, Department department) {
+  public BaseResponse updateDepartment(UUID id, Department department) {
     Optional.of(id)
             .map(departmentRepository::findById)
             .orElseThrow(() -> new DataNotFoundException("Department not found!"))

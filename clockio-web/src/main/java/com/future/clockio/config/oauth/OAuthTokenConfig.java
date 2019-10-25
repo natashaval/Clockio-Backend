@@ -1,6 +1,6 @@
 package com.future.clockio.config.oauth;
 
-import com.future.clockio.service.helper.MongoUserDetailsService;
+import com.future.clockio.service.helper.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ public class OAuthTokenConfig {
   private ClientDetailsService clientDetailsService;
 
   @Autowired
-  private MongoUserDetailsService userDetailsService;
+  private CustomUserDetailsService userDetailsService;
 
   @Bean
   public TokenStore tokenStore() {

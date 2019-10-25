@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Coordinate {
-
-  private String type;
-  private String coordinates;
   private double latitude;
   private double longitude;
 }

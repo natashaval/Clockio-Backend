@@ -2,32 +2,31 @@ package com.future.clockio.entity.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
-import com.future.clockio.entity.constant.DocumentName;
 import com.future.clockio.entity.constant.Status;
-import com.future.clockio.entity.base.Coordinate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(value = {"target"})
-@Document(collection = DocumentName.EMPLOYEE)
+//@JsonIgnoreProperties(value = {"target"})
+//@Document(collection = DocumentName.EMPLOYEE)
+@Entity
+@Table(name = "Employee")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Employee extends BaseEntity {
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-  private Status status;
+  private String status;
 
   private String firstName;
 
@@ -39,19 +38,21 @@ public class Employee extends BaseEntity {
 
   private String profileUrl; // set profile picture Url from cloudinary
 
-  private List<Photo> photoUrl = new ArrayList<>(); // list of trained face
+//  private List<Photo> photoUrl = new ArrayList<>(); // list of trained face
 
   private String faceListId;
 
-  private Coordinate lastCoordinate;
+  private double lastLatitude;
+  private double lastLongitude;t
 
   private Date lastCheckIn;
 
   private Date lastCheckOut;
 
-  @DBRef(lazy = true)
-  private Branch branch;
+//  @DBRef(lazy = true)
+//  private Branch branch;
 
-  @DBRef(lazy = true)
+//  @DBRef(lazy = true)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private Department department;
 }
