@@ -27,6 +27,7 @@ public class User implements UserDetails {
 
   @NotBlank(message = "username must not be blank")
   private String username;
+  @JsonIgnore
   private String password;
 
 //  @NotEmpty

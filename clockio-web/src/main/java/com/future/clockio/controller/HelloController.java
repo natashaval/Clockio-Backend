@@ -33,13 +33,6 @@ public class HelloController {
     return "You are here! after Bearer Authorization!" + auth.getName();
   }
 
-  @GetMapping("/test")
-  public Map<String,String> printTest() {
-    Map<String,String> test = new HashMap<>();
-    test.put("test", "Hasil dari Test");
-    return test;
-  }
-
   @GetMapping("/api/profile")
   public Object getProfile() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
