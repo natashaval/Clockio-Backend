@@ -2,6 +2,7 @@ package com.future.clockio.entity.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
+import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +16,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonIgnoreProperties(value = {"target"})
-//@Document(collection = DocumentName.EMPLOYEE)
 @Entity
-@Table(name = "Employee")
+@Table(name = DocumentName.EMPLOYEE)
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Employee extends BaseEntity {
   @Id
@@ -37,8 +36,6 @@ public class Employee extends BaseEntity {
 
   private String profileUrl; // set profile picture Url from cloudinary
 
-//  private List<Photo> photoUrl = new ArrayList<>(); // list of trained face
-
   private String faceListId;
 
   private double lastLatitude;
@@ -48,10 +45,6 @@ public class Employee extends BaseEntity {
 
   private Date lastCheckOut;
 
-//  @DBRef(lazy = true)
-//  private Branch branch;
-
-//  @DBRef(lazy = true)
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private Department department;
 }

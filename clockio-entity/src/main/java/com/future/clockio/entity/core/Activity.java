@@ -3,6 +3,7 @@ package com.future.clockio.entity.core;
 
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.company.Employee;
+import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,20 +11,20 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@Document(collection = DocumentName.ACTIVITY)
 @Entity
-@Table(name = "Activity")
+@Table(name = DocumentName.ACTIVITY)
 public class Activity extends BaseEntity {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-//  @DBRef(lazy = true)
   @ManyToOne(fetch = FetchType.LAZY)
   private Employee employee;
 

@@ -1,6 +1,7 @@
 package com.future.clockio.entity.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +18,8 @@ import java.util.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@Document(collection = DocumentName.USER)
 @Entity
-@Table(name = "Cuser")
+@Table(name = DocumentName.USER)
 public class User implements UserDetails {
   @Id
   @GeneratedValue
@@ -30,8 +30,6 @@ public class User implements UserDetails {
   @JsonIgnore
   private String password;
 
-//  @NotEmpty
-//  private List<String> roles = new ArrayList<>();
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)
   private Role role;

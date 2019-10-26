@@ -15,10 +15,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@Document(collection = DocumentName.DEPARTMENT)
 @Entity
-@Table(name = "Department")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@Table(name = DocumentName.DEPARTMENT)
 public class Department {
 
   @Id
@@ -28,9 +26,6 @@ public class Department {
   private String name;
 
 //  @ManyToOne(fetch = FetchType.LAZY)
-//  private Branch branch;
-
-//  @DBRef(lazy = true)
 //  private Branch branch;
 
   private String branchId;

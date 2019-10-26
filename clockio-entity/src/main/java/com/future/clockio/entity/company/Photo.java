@@ -1,6 +1,7 @@
 package com.future.clockio.entity.company;
 
 import com.future.clockio.entity.base.BaseEntity;
+import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +18,9 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Photo")
+@Table(name = DocumentName.PHOTO)
 public class Photo extends BaseEntity {
+
   @Id
   private String publicId;
 

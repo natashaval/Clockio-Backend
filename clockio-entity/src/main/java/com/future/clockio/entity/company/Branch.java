@@ -1,6 +1,7 @@
 package com.future.clockio.entity.company;
 
 import com.future.clockio.entity.base.BaseEntity;
+import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Document(collection = DocumentName.BRANCH)
-@Table(name = "Branch")
+@Table(name = DocumentName.BRANCH)
 public class Branch extends BaseEntity {
 
   @Id

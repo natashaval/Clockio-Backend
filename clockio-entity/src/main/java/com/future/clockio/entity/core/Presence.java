@@ -10,26 +10,27 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@Document(collection = DocumentName.WORK)
 @Entity
-@Table(name = "Work")
-public class Work extends BaseEntity {
-  // Work's Done Today
-
+@Table(name = DocumentName.PRESENCE)
+public class Presence {
+  // Presence's Done Today
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-//  @DBRef(lazy = true)
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private Employee employee;
 
   private Date checkIn;
-
   private Date checkOut;
+
+  private double latitude;
+  private double longitude;
 
 }

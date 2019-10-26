@@ -1,5 +1,6 @@
 package com.future.clockio.entity.core;
 
+import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Erole")
+@Table(name = DocumentName.ROLE)
 public class Role {
   @Id
   @Column(name = "role_id")
