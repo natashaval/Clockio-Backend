@@ -42,7 +42,6 @@ public class Employee extends BaseEntity {
   private double lastLongitude;
 
   private Date lastCheckIn;
-
   private Date lastCheckOut;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)

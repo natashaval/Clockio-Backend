@@ -59,7 +59,7 @@ public class ImageServiceImpl implements ImageService {
 //    }
 //    employeeRepository.save(employee);
     BaseResponse response = new BaseResponse(true, "Employee Image uploaded!");
-    response.getDetails().put("url", imageResponse.getUrl());
+    response.getData().put("url", imageResponse.getUrl());
     return response;
   }
 

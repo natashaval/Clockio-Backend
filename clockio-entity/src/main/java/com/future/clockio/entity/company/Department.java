@@ -17,6 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = DocumentName.DEPARTMENT)
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Department {
 
   @Id

@@ -35,6 +35,7 @@ public class FaceController {
     ImageUploadRequest request = new ImageUploadRequest();
     request.setEmployeeId(id);
     request.setFile(photo);
+    request.setPersisted(false);
     return faceService.findSimilar(request);
   }
 }

@@ -14,7 +14,7 @@ public class BaseResponse {
 
   private boolean success = false;
   private String message = "";
-  private Map<String, String> details = new HashMap<>();
+  private Map<String, String> data = new HashMap<>();
 
   public BaseResponse(boolean success, String message) {
     this.success = success;

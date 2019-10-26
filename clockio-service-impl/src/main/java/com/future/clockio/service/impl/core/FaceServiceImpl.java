@@ -48,6 +48,10 @@ public class FaceServiceImpl implements FaceService {
 
   @Override
   public BaseResponse findSimilar(ImageUploadRequest request) {
+    Employee employee = employeeRepository.findById(request.getEmployeeId())
+            .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
+
+    request.setFaceListId(employee.getFaceListId());
 
     // upload image to Cloudinary
     ImageUploadResponse uploadResponse = uploadImage(request);
@@ -81,12 +85,8 @@ public class FaceServiceImpl implements FaceService {
             BaseResponse.failed("Face Not Match!");
   }
 
-  private ImageUploadResponse uploadImage(ImageUploadRequest request){
-    Employee employee = employeeRepository.findById(request.getEmployeeId())
-            .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
-
-    request.setFaceListId(employee.getFaceListId());
-    request.setPersisted(false);
+  @Override
+  public ImageUploadResponse uploadImage(ImageUploadRequest request){
     ImageUploadResponse imageResponse;
     try {
       imageResponse =
@@ -111,7 +111,8 @@ public class FaceServiceImpl implements FaceService {
     return response.get(0).getFaceId();
   }
 
-  private String deleteImage(ImageDestroyRequest request) {
+  @Override
+  public String deleteImage(ImageDestroyRequest request) {
     ImageDestroyResponse response;
     try {
       response =
