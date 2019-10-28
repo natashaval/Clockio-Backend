@@ -1,7 +1,7 @@
 package com.future.clockio.config;
 
 import com.future.clockio.config.filter.CorsFilter;
-import com.future.clockio.service.helper.MongoUserDetailsService;
+import com.future.clockio.service.helper.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,7 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
-  MongoUserDetailsService userDetailsService;
+  CustomUserDetailsService userDetailsService;
 
   @Autowired
   PasswordEncoder passwordEncoder;
@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(
                     "/auth/**", "/oauth2/**",
                     "/oauth/token",
-                    "/about",
+                    "/about", "/test",
                     "/swagger-ui.html",
                     "/v2/api-docs",
                     "/docs",

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(value = "/api/employees/image")
 public class ImageController {
@@ -21,7 +23,7 @@ public class ImageController {
 
   @PostMapping(value = "/{id}/upload")
   private BaseResponse uploadImage(
-          @PathVariable("id") String id,
+          @PathVariable("id") UUID id,
           @RequestParam("file") MultipartFile file) {
     ImageUploadRequest request = new ImageUploadRequest();
     request.setEmployeeId(id);
@@ -31,7 +33,7 @@ public class ImageController {
 
   @DeleteMapping("/{id}/destroy")
   private BaseResponse destroyImage(
-          @PathVariable("id") String id,
+          @PathVariable("id") UUID id,
           @RequestBody ImageDestroyRequest request) {
     request.setEmployeeId(id);
     return imageService.destroyImage(request);

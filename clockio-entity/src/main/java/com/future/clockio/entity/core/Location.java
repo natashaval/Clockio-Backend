@@ -1,13 +1,12 @@
-package com.future.clockio.entity.company;
+package com.future.clockio.entity.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.future.clockio.entity.base.BaseEntity;
+import com.future.clockio.entity.company.Employee;
 import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -16,17 +15,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = DocumentName.DEPARTMENT)
-public class Department {
+@Table(name = DocumentName.LOCATION)
+public class Location extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  private String name;
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Employee employee;
 
-//  @ManyToOne(fetch = FetchType.LAZY)
-//  private Branch branch;
-
-  private String branchId;
+  private double latitude;
+  private double longitude;
 }

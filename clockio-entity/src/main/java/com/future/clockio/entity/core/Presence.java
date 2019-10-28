@@ -7,28 +7,30 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = DocumentName.WORK)
-public class Work extends BaseEntity {
-  // Work's Done Today
-
+@Entity
+@Table(name = DocumentName.PRESENCE)
+public class Presence {
+  // Presence's Done Today
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-  @DBRef(lazy = true)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private Employee employee;
 
   private Date checkIn;
-
   private Date checkOut;
+
+  private double latitude;
+  private double longitude;
 
 }

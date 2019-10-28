@@ -1,13 +1,16 @@
 package com.future.clockio.entity.constant;
 
 public interface DocumentName {
-  String USER = "users";
+  String USER = "cuser";
 
-  String BRANCH = "branches";
-  String DEPARTMENT = "departments";
-  String EMPLOYEE = "employees";
+  String BRANCH = "branch";
+  String DEPARTMENT = "department";
+  String EMPLOYEE = "employee";
 
-  String WORK = "works";
-  String ACTIVITY = "activities";
-  String NOTIFICATION = "notifications";
+  String PRESENCE = "presence";
+  String ACTIVITY = "activity";
+  String LOCATION = "location";
+  String NOTIFICATION = "notification";
+  String PHOTO = "photo";
+  String ROLE = "crole";
 }

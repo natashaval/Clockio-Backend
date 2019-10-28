@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BranchServiceImpl implements BranchService {
@@ -23,13 +24,13 @@ public class BranchServiceImpl implements BranchService {
   }
 
   @Override
-  public Branch findById(String id) {
+  public Branch findById(UUID id) {
     return branchRepository.findById(id)
             .orElseThrow(() -> new DataNotFoundException("Branch not found!"));
   }
 
   @Override
-  public BaseResponse deleteById(String id) {
+  public BaseResponse deleteById(UUID id) {
     Branch exist = branchRepository.findById(id)
             .orElseThrow(() -> new DataNotFoundException("Branch not found!"));
     if (exist != null) {
@@ -48,7 +49,7 @@ public class BranchServiceImpl implements BranchService {
   }
 
   @Override
-  public BaseResponse updateBranch(String id, Branch branch) {
+  public BaseResponse updateBranch(UUID id, Branch branch) {
     Optional.of(id)
             .map(branchRepository::findById)
             .orElseThrow(() -> new DataNotFoundException("Branch not found!"))
@@ -68,7 +69,9 @@ public class BranchServiceImpl implements BranchService {
     targetBranch.setName(branch.getName());
     targetBranch.setCountry(branch.getCountry());
     targetBranch.setCity(branch.getCity());
-    targetBranch.setLocation(branch.getLocation());
+//    targetBranch.setLocation(branch.getLocation());
+    targetBranch.setLatitude(branch.getLatitude());
+    targetBranch.setLongitude(branch.getLongitude());
     return targetBranch;
   }
 }

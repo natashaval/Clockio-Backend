@@ -6,36 +6,39 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = DocumentName.USER)
+@Entity
+@Table(name = DocumentName.USER)
 public class User implements UserDetails {
   @Id
-  private String id;
+  @GeneratedValue
+  private UUID id;
 
   @NotBlank(message = "username must not be blank")
   private String username;
+  @JsonIgnore
   private String password;
 
-  @NotEmpty
-  private List<String> roles = new ArrayList<>();
+  @ManyToOne
+  @JoinColumn(name = "role_id", nullable = false)
+  private Role role;
 
+//  @Transient
+//  @JsonIgnore
+//  private Collection<? extends GrantedAuthority> authorities;
+
+  /*
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
@@ -46,6 +49,7 @@ public class User implements UserDetails {
     this.password = password;
     this.roles = roles;
   }
+   */
 
   @Transient
   @JsonIgnore
@@ -59,7 +63,18 @@ public class User implements UserDetails {
   @Transient
   @JsonIgnore
   private boolean credentialsNonExpired = true;
-  @Transient
-  @JsonIgnore
-  private Collection<? extends GrantedAuthority> authorities;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<GrantedAuthority> result =
+            new ArrayList<GrantedAuthority>();
+    result.add(new SimpleGrantedAuthority(this.role.getRole()));
+    return result;
+  }
+
+  public User(String username, String password, Role role) {
+    this.username = username;
+    this.password = password;
+    this.role = role;
+  }
 }

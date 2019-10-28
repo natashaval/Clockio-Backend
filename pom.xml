@@ -29,7 +29,15 @@
   </parent>
 
   <properties>
+    <starter.version>2.1.8.RELEASE</starter.version>
     <java.version>1.8</java.version>
+    <postgresql.version>42.2.5</postgresql.version>
+    <swagger.version>2.9.2</swagger.version>
+    <spring.security.oauth.version>2.3.5.RELEASE</spring.security.oauth.version>
+    <spring.security.jwt.version>1.0.10.RELEASE</spring.security.jwt.version>
+    <cloudinary.http44.version>1.23.0</cloudinary.http44.version>
+    <spring.cloud.starter.openfeign.version>2.1.2.RELEASE</spring.cloud.starter.openfeign.version>
+    <feign.httpclient.version>10.5.0</feign.httpclient.version>
   </properties>
 
   <dependencies>
@@ -50,6 +58,11 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
   </dependencies>
 
@@ -98,48 +111,48 @@
 
       <dependency>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        <version>2.1.8.RELEASE</version>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+        <version>${starter.version}</version>
       </dependency>
       <dependency>
         <groupId>io.springfox</groupId>
         <artifactId>springfox-swagger2</artifactId>
-        <version>2.9.2</version>
+        <version>${swagger.version}</version>
       </dependency>
       <dependency>
         <groupId>io.springfox</groupId>
         <artifactId>springfox-swagger-ui</artifactId>
-        <version>2.9.2</version>
+        <version>${swagger.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
-        <version>2.1.8.RELEASE</version>
+        <version>${starter.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.security.oauth</groupId>
         <artifactId>spring-security-oauth2</artifactId>
-        <version>2.3.5.RELEASE</version>
+        <version>${spring.security.oauth.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-jwt</artifactId>
-        <version>1.0.10.RELEASE</version>
+        <version>${spring.security.jwt.version}</version>
       </dependency>
       <dependency>
         <groupId>com.cloudinary</groupId>
         <artifactId>cloudinary-http44</artifactId>
-        <version>1.23.0</version>
+        <version>${cloudinary.http44.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-openfeign</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>${spring.cloud.starter.openfeign.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.openfeign</groupId>
         <artifactId>feign-httpclient</artifactId>
-        <version>10.5.0</version>
+        <version>${feign.httpclient.version}</version>
       </dependency>
 
 

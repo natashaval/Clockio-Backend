@@ -2,6 +2,8 @@ package com.future.clockio.request.company;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class EmployeeCreateRequest {
   private String firstName;
@@ -12,6 +14,6 @@ public class EmployeeCreateRequest {
   private String photoUrl;
   private String faceListId;
 
-  private String branchId;
-  private String departmentId;
+//  private String branchId;
+  private UUID departmentId;
 }
