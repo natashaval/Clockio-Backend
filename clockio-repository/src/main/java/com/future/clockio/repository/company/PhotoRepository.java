@@ -11,4 +11,5 @@ import java.util.List;
 public interface PhotoRepository extends JpaRepository<Photo, String> {
 
   List<Photo> findByEmployee_IdAndMainPhoto(String id, boolean main);
+  Photo findByUrl(String url);
 }

@@ -4,6 +4,7 @@ import com.future.clockio.entity.core.Presence;
 import com.future.clockio.request.company.ImageUploadRequest;
 import com.future.clockio.request.core.PresenceRequest;
 import com.future.clockio.response.base.BaseResponse;
+import com.future.clockio.service.company.ImageService;
 import com.future.clockio.service.core.PresenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,14 @@ import java.util.UUID;
 @RequestMapping(value = "/api/presence")
 public class PresenceController {
 
-  @Autowired
   private PresenceService presenceService;
+  private ImageService imageService;
+
+  @Autowired
+  public PresenceController(PresenceService presenceService, ImageService imageService) {
+    this.presenceService = presenceService;
+    this.imageService = imageService;
+  }
 
   @GetMapping
   public List<Presence> findAll() {
@@ -38,15 +45,15 @@ public class PresenceController {
     return presenceService.checkOut(request);
   }
 
-  @PostMapping(value = "/{presenceId}/upload") // presence Id
+  @PostMapping(value = "/{id}/upload") // employee Id
   public BaseResponse checkInPhotoUpload(
-          @PathVariable("presenceId") UUID presenceId,
+          @PathVariable("id") UUID id,
           @RequestParam("photo") MultipartFile photo) {
     ImageUploadRequest request = new ImageUploadRequest();
-    request.setPresenceId(presenceId);
+    request.setEmployeeId(id);
     request.setFile(photo);
     request.setPersisted(false);
-    return presenceService.checkInPhotoUpload(request);
+    return imageService.uploadImage(request);
   }
 
 }

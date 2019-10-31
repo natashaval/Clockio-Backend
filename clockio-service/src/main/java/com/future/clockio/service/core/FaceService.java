@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FaceService {
   BaseResponse findSimilar(ImageUploadRequest request);
-  ImageUploadResponse uploadImage(ImageUploadRequest request);
-  String deleteImage(ImageDestroyRequest request);
+  BaseResponse uploadImage(ImageUploadRequest request);
+  BaseResponse deleteImage(ImageDestroyRequest request);
+
+  String faceDetect(String url);
+  boolean checkSimilarity(String faceId, String faceListId);
 }

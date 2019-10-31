@@ -55,8 +55,9 @@ public class FaceListController {
                                  @RequestBody AddFaceRequest request) {
     AddFaceResponse faceResponse = client.addFace(faceListId, request);
     BaseResponse response = BaseResponse.success("Face Added!");
-    response.getData().put("persistedFaceId",
-            faceResponse.getPersistedFaceId());
+//    response.getData().put("persistedFaceId",
+//            faceResponse.getPersistedFaceId());
+    response.setData(faceResponse);
     return response;
   }
 }

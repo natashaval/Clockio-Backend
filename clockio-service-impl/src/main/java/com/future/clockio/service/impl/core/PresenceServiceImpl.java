@@ -9,20 +9,18 @@ import com.future.clockio.exception.InvalidRequestException;
 import com.future.clockio.repository.company.EmployeeRepository;
 import com.future.clockio.repository.company.PhotoRepository;
 import com.future.clockio.repository.core.PresenceRepository;
-import com.future.clockio.request.company.ImageUploadRequest;
 import com.future.clockio.request.core.PresenceRequest;
 import com.future.clockio.response.base.BaseResponse;
-import com.future.clockio.response.company.ImageUploadResponse;
 import com.future.clockio.service.core.FaceService;
 import com.future.clockio.service.core.PresenceService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.util.TextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -48,47 +46,35 @@ public class PresenceServiceImpl implements PresenceService {
   }
 
   @Override
-  public BaseResponse checkInPhotoUpload(ImageUploadRequest request) {
-    Presence presence = presenceRepository.findById(request.getPresenceId())
-            .orElseThrow(() -> new InvalidRequestException("Presence Id not found!"));
-
-    // upload image to Cloudinary
-    request.setFaceListId(presence.getEmployee().getFaceListId());
-    ImageUploadResponse uploadResponse = faceService.uploadImage(request);
-
-    // save to photo repository
-    Photo photo = mapper.convertValue(uploadResponse, Photo.class);
-    photo.setPublicId(uploadResponse.getPublicId());
-    photo.setEmployee(presence.getEmployee());
-    photoRepository.save(photo);
-
-    // save one to one Presence with Photo
-    presence.setPhoto(photo);
-    presenceRepository.save(presence);
-
-    return BaseResponse.success("Presence photo uploaded!");
-  }
-
-  @Override
   public List<Presence> findAll() {
     return presenceRepository.findAll();
   }
 
   @Override
   public BaseResponse checkIn(PresenceRequest request) {
-    Presence presence = mapper.convertValue(request, Presence.class);
-    log.debug("Presence" + presence);
-
     Employee employee = employeeRepository.findById(request.getEmployeeId())
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
 
+    boolean photoExists = !TextUtils.isEmpty(request.getUrl());
+    Photo photo = new Photo();
+    if (photoExists) {
+      String faceId = faceService.faceDetect(request.getUrl());
+      boolean isSimilar = faceService.checkSimilarity(faceId, employee.getFaceListId());
+      if (!isSimilar) throw new InvalidRequestException("Face Not Match!");
+
+      photo = photoRepository.findByUrl(request.getUrl());
+    }
+
+    Presence presence = mapper.convertValue(request, Presence.class);
+    log.debug("Presence" + presence);
+
     // log presence
     presence.setEmployee(employee);
+    if (photoExists) presence.setPhoto(photo);
     presence.setCheckIn(new Date()); // get current timestamp
     Presence presenceResult = Optional.of(presence)
             .map(presenceRepository::save)
             .orElseThrow(() -> new InvalidRequestException("Fail check in!"));
-
     // save employee last Presence checkIn
     employee.setLastCheckIn(presenceResult.getCheckIn());
     employee.setLastLatitude(presenceResult.getLatitude());
@@ -96,7 +82,7 @@ public class PresenceServiceImpl implements PresenceService {
     employeeRepository.save(employee);
 
     BaseResponse response = BaseResponse.success("Success check in!");
-    response.getData().put("presenceId", presenceResult.getId().toString());
+    response.setData(presenceResult);
     return response;
   }
 

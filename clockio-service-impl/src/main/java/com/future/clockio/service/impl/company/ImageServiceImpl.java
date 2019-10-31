@@ -1,5 +1,6 @@
 package com.future.clockio.service.impl.company;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.future.clockio.command.ImageDestroyCommand;
 import com.future.clockio.command.ImageUploadCommand;
 import com.future.clockio.entity.company.Employee;
@@ -25,6 +26,9 @@ import java.util.Map;
 @Slf4j
 public class ImageServiceImpl implements ImageService {
 
+  @Autowired
+  private ObjectMapper mapper;
+
   private CommandExecutorService commandExecutor;
   private EmployeeRepository employeeRepository;
   private PhotoRepository photoRepository;
@@ -44,22 +48,17 @@ public class ImageServiceImpl implements ImageService {
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
 
     request.setFaceListId(employee.getFaceListId());
-    request.setPersisted(true);
     ImageUploadResponse imageResponse =
             commandExecutor.executeCommand(ImageUploadCommand.class, request);
     log.info("Image Upload Response" + imageResponse);
-    Photo photo = new Photo();
+    Photo photo = mapper.convertValue(imageResponse, Photo.class);
     photo.setPublicId(imageResponse.getPublicId());
-    photo.setUrl(imageResponse.getUrl());
     photo.setEmployee(employee);
+    photo.setMainPhoto(request.isPersisted());
     photoRepository.save(photo);
-//
-//    if (!employee.getPhotoUrl().contains(photo)) {
-//      employee.getPhotoUrl().add(photo);
-//    }
-//    employeeRepository.save(employee);
-    BaseResponse response = new BaseResponse(true, "Employee Image uploaded!");
-    response.getData().put("url", imageResponse.getUrl());
+
+    BaseResponse response = BaseResponse.success("Employee Image uploaded!");
+    response.setData(imageResponse);
     return response;
   }
 

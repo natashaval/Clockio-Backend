@@ -10,11 +10,12 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseResponse {
+public class BaseResponse<T> {
 
   private boolean success = false;
   private String message = "";
-  private Map<String, String> data = new HashMap<>();
+//  private Map<String, String> data = new HashMap<>();
+  private T data;
 
   public BaseResponse(boolean success, String message) {
     this.success = success;
