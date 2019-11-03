@@ -38,6 +38,7 @@
     <cloudinary.http44.version>1.23.0</cloudinary.http44.version>
     <spring.cloud.starter.openfeign.version>2.1.2.RELEASE</spring.cloud.starter.openfeign.version>
     <feign.httpclient.version>10.5.0</feign.httpclient.version>
+    <joda.time.version>2.10.5</joda.time.version>
   </properties>
 
   <dependencies>
@@ -153,6 +154,11 @@
         <groupId>io.github.openfeign</groupId>
         <artifactId>feign-httpclient</artifactId>
         <version>${feign.httpclient.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>${joda.time.version}</version>
       </dependency>
 
 
