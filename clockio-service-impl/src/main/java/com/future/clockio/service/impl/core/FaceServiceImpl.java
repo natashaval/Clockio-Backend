@@ -48,24 +48,19 @@ public class FaceServiceImpl implements FaceService {
 
   @Override
   public BaseResponse findSimilar(ImageUploadRequest request) {
+    Employee employee = employeeRepository.findById(request.getEmployeeId())
+            .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
+
+    request.setFaceListId(employee.getFaceListId());
 
     // upload image to Cloudinary
-    ImageUploadResponse uploadResponse = uploadImage(request);
+    ImageUploadResponse uploadResponse = (ImageUploadResponse) uploadImage(request).getData();
 
     // insert face to Face - Detect
     String faceId = faceDetect(uploadResponse.getUrl());
 
     // find similar using Face - Find Similar
-    FindSimilarRequest findSimilarRequest = new FindSimilarRequest();
-    findSimilarRequest.setFaceListId(request.getFaceListId());
-    findSimilarRequest.setFaceId(faceId);
-    findSimilarRequest.setMode("matchFace");
-
-    List<FindSimilarResponse> similarResponse = faceClient.findSimilar(findSimilarRequest);
-    double averageConfidence = 0.0;
-    for (FindSimilarResponse response: similarResponse) {
-      averageConfidence += response.getConfidence();
-    }
+    boolean isSimilar = checkSimilarity(faceId, employee.getFaceListId());
 
     // delete face from Cloudinary
     List<String> publicId = new ArrayList<>();
@@ -74,19 +69,14 @@ public class FaceServiceImpl implements FaceService {
     destroyRequest.setEmployeeId(request.getEmployeeId());
     destroyRequest.setPublicId(publicId);
     destroyRequest.setByTag(false);
-    String destroyResponse = deleteImage(destroyRequest);
+    deleteImage(destroyRequest);
 
-    boolean isMatch = averageConfidence/similarResponse.size() >= 0.90;
-    return (isMatch) ? BaseResponse.success("Face Match!") :
+    return (isSimilar) ? BaseResponse.success("Face Match!") :
             BaseResponse.failed("Face Not Match!");
   }
 
-  private ImageUploadResponse uploadImage(ImageUploadRequest request){
-    Employee employee = employeeRepository.findById(request.getEmployeeId())
-            .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
-
-    request.setFaceListId(employee.getFaceListId());
-    request.setPersisted(false);
+  @Override
+  public BaseResponse uploadImage(ImageUploadRequest request){
     ImageUploadResponse imageResponse;
     try {
       imageResponse =
@@ -95,11 +85,14 @@ public class FaceServiceImpl implements FaceService {
     } catch (Exception e) {
       throw new InvalidRequestException("Failed in uploading image!");
     }
-    log.info("Presence: " + imageResponse);
-    return imageResponse;
+    log.info("Image: " + imageResponse);
+    BaseResponse response = BaseResponse.success("Image uploaded!");
+    response.setData(imageResponse);
+    return response;
   }
 
-  private String faceDetect(String url){
+  @Override
+  public String faceDetect(String url){
     List<AddFaceResponse> response;
     try {
       response = faceClient.faceDetect("recognition_02", true,
@@ -111,15 +104,33 @@ public class FaceServiceImpl implements FaceService {
     return response.get(0).getFaceId();
   }
 
-  private String deleteImage(ImageDestroyRequest request) {
-    ImageDestroyResponse response;
+  @Override
+  public boolean checkSimilarity(String faceId, String faceListId) {
+    FindSimilarRequest findSimilarRequest = new FindSimilarRequest();
+    findSimilarRequest.setFaceListId(faceListId);
+    findSimilarRequest.setFaceId(faceId);
+    findSimilarRequest.setMode("matchFace");
+
+    List<FindSimilarResponse> similarResponse = faceClient.findSimilar(findSimilarRequest);
+    double averageConfidence = 0.0;
+    for (FindSimilarResponse response: similarResponse) {
+      averageConfidence += response.getConfidence();
+    }
+    return averageConfidence/similarResponse.size() >= 0.90;
+  }
+
+  @Override
+  public BaseResponse deleteImage(ImageDestroyRequest request) {
+    ImageDestroyResponse destroyResponse;
     try {
-      response =
+      destroyResponse =
               commandExecutor.executeCommand(ImageDestroyCommand.class, request);
-      log.info("Delete image: " + response.getPartial());
+      log.info("Delete image: " + destroyResponse.getPartial());
     } catch (Exception e) {
       throw new InvalidRequestException("Failed in Delete Image!");
     }
-    return response.getPartial();
+    BaseResponse response = BaseResponse.success("Image Deleted");
+    response.setData(destroyResponse);
+    return response;
   }
 }

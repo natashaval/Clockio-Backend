@@ -1,5 +1,6 @@
 package com.future.clockio.entity.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.company.Employee;
 import com.future.clockio.entity.constant.DocumentName;
@@ -16,13 +17,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = DocumentName.LOCATION)
+@JsonIgnoreProperties({"employee"})
 public class Location extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private Employee employee;
 
   private double latitude;

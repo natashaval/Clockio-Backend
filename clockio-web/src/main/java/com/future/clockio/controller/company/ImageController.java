@@ -24,10 +24,11 @@ public class ImageController {
   @PostMapping(value = "/{id}/upload")
   private BaseResponse uploadImage(
           @PathVariable("id") UUID id,
-          @RequestParam("file") MultipartFile file) {
+          @RequestParam("photo") MultipartFile photo) {
     ImageUploadRequest request = new ImageUploadRequest();
     request.setEmployeeId(id);
-    request.setFile(file);
+    request.setFile(photo);
+    request.setPersisted(true);
     return imageService.uploadImage(request);
   }
 

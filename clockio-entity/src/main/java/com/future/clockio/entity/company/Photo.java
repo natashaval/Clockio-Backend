@@ -1,5 +1,6 @@
 package com.future.clockio.entity.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = DocumentName.PHOTO)
+@JsonIgnoreProperties({"hibernateLazyInitializer","employee"})
 public class Photo extends BaseEntity {
 
   @Id

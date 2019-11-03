@@ -5,6 +5,7 @@ import com.future.clockio.client.model.request.AddFaceRequest;
 import com.future.clockio.client.model.request.FindSimilarRequest;
 import com.future.clockio.client.model.response.AddFaceResponse;
 import com.future.clockio.client.model.response.FindSimilarResponse;
+import com.future.clockio.request.company.ImageDestroyRequest;
 import com.future.clockio.request.company.ImageUploadRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.core.FaceService;
@@ -35,6 +36,13 @@ public class FaceController {
     ImageUploadRequest request = new ImageUploadRequest();
     request.setEmployeeId(id);
     request.setFile(photo);
+    request.setPersisted(false);
     return faceService.findSimilar(request);
+  }
+
+  @DeleteMapping(value = "/{id}/delete")
+  public BaseResponse faceDelete(@PathVariable("id") UUID id,
+          @RequestBody ImageDestroyRequest request) {
+    return faceService.deleteImage(request);
   }
 }

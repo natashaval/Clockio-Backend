@@ -1,10 +1,8 @@
 package com.future.clockio.service.impl.company;
 
-import com.future.clockio.entity.company.Department;
 import com.future.clockio.entity.company.Employee;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.exception.InvalidRequestException;
-import com.future.clockio.repository.company.BranchRepository;
 import com.future.clockio.repository.company.DepartmentRepository;
 import com.future.clockio.repository.company.EmployeeRepository;
 import com.future.clockio.request.company.EmployeeCreateRequest;
@@ -22,15 +20,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   private EmployeeRepository employeeRepository;
   private DepartmentRepository departmentRepository;
-  private BranchRepository branchRepository;
 
   @Autowired
   public EmployeeServiceImpl(EmployeeRepository employeeRepository,
-                             DepartmentRepository departmentRepository,
-                             BranchRepository branchRepository) {
+                             DepartmentRepository departmentRepository) {
     this.employeeRepository = employeeRepository;
     this.departmentRepository = departmentRepository;
-    this.branchRepository = branchRepository;
   }
 
   @Override
