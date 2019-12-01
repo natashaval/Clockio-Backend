@@ -29,6 +29,7 @@ public class User implements UserDetails {
   private String username;
   @JsonIgnore
   private String password;
+  private UUID employeeId;
 
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)
