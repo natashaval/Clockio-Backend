@@ -33,11 +33,8 @@ public class BranchServiceImpl implements BranchService {
   public BaseResponse deleteById(UUID id) {
     Branch exist = branchRepository.findById(id)
             .orElseThrow(() -> new DataNotFoundException("Branch not found!"));
-    if (exist != null) {
-      branchRepository.deleteById(id);
-      return BaseResponse.success("Branch is deleted!");
-    }
-    else throw new InvalidRequestException("Failed in delete branch!");
+    branchRepository.deleteById(id);
+    return BaseResponse.success("Branch is deleted!");
   }
 
   @Override
