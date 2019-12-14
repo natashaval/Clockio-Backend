@@ -2,6 +2,7 @@ package com.future.clockio.controller.company;
 
 import com.future.clockio.entity.company.Employee;
 import com.future.clockio.request.company.EmployeeCreateRequest;
+import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,10 @@ public class EmployeeController {
     return employeeService.deleteById(id);
   }
 
+  @PostMapping("/{id}/status")
+  public BaseResponse updateStatus(@PathVariable("id") UUID id, @RequestParam String status) {
+    StatusRequest request = new StatusRequest(id, status);
+    return employeeService.updateStatus(request);
+  }
 
 }

@@ -1,11 +1,13 @@
 package com.future.clockio.service.impl.company;
 
 import com.future.clockio.entity.company.Employee;
+import com.future.clockio.entity.constant.EStatus;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.exception.InvalidRequestException;
 import com.future.clockio.repository.company.DepartmentRepository;
 import com.future.clockio.repository.company.EmployeeRepository;
 import com.future.clockio.request.company.EmployeeCreateRequest;
+import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +70,14 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Override
   public List<Employee> findAll() {
     return employeeRepository.findAll();
+  }
+
+  @Override
+  public BaseResponse updateStatus(StatusRequest request) {
+    Employee employee = findById(request.getEmployeeId());
+    employee.setStatus(EStatus.valueOf(request.getStatus().toUpperCase()));
+    employeeRepository.save(employee);
+    return BaseResponse.success("Status updated!");
   }
 
   private Employee copyProperties(EmployeeCreateRequest request,

@@ -3,6 +3,7 @@ package com.future.clockio.entity.company;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.constant.DocumentName;
+import com.future.clockio.entity.constant.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class Employee extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  private String status;
+  private EStatus status;
 
   private String firstName;
 

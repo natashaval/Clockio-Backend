@@ -7,7 +7,9 @@ import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.repository.company.EmployeeRepository;
 import com.future.clockio.repository.core.ActivityRepository;
 import com.future.clockio.request.core.ActivityRequest;
+import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
+import com.future.clockio.service.company.EmployeeService;
 import com.future.clockio.service.core.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,18 +27,17 @@ public class ActivityServiceImpl implements ActivityService {
   @Autowired
   private ObjectMapper mapper;
   private ActivityRepository activityRepository;
-  private EmployeeRepository employeeRepository;
+  private EmployeeService employeeService;
 
   @Autowired
-  public ActivityServiceImpl(ActivityRepository activityRepository, EmployeeRepository employeeRepository) {
+  public ActivityServiceImpl(ActivityRepository activityRepository, EmployeeService employeeService) {
     this.activityRepository = activityRepository;
-    this.employeeRepository = employeeRepository;
+    this.employeeService = employeeService;
   }
 
   @Override
   public BaseResponse createActivity(ActivityRequest request) {
-    Employee employee =
-            employeeRepository.findById(request.getEmployeeId()).orElseThrow(() -> new DataNotFoundException("Employee not found!"));
+    Employee employee = employeeService.findById(request.getEmployeeId());
     Activity activity = mapper.convertValue(request, Activity.class);
     activity.setEmployee(employee);
     activityRepository.save(activity);
