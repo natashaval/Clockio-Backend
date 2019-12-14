@@ -3,6 +3,7 @@ package com.future.clockio.controller.company;
 import com.future.clockio.command.ImageDestroyCommand;
 import com.future.clockio.command.ImageUploadCommand;
 import com.future.clockio.request.company.ImageDestroyRequest;
+import com.future.clockio.request.company.ImageSaveRequest;
 import com.future.clockio.request.company.ImageUploadRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.response.company.ImageDestroyResponse;
@@ -38,5 +39,11 @@ public class ImageController {
           @RequestBody ImageDestroyRequest request) {
     request.setEmployeeId(id);
     return imageService.destroyImage(request);
+  }
+
+  @PostMapping("/{id}/save")
+  private BaseResponse saveImage(@PathVariable("id") UUID id,
+                                 @RequestBody ImageSaveRequest request) {
+    return imageService.saveImage(request);
   }
 }
