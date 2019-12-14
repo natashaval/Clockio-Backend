@@ -25,7 +25,7 @@ public class Employee extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  private EStatus status;
+  private String status;
 
   private String firstName;
 

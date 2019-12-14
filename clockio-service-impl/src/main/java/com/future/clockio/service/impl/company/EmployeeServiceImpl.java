@@ -75,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Override
   public BaseResponse updateStatus(StatusRequest request) {
     Employee employee = findById(request.getEmployeeId());
-    employee.setStatus(EStatus.valueOf(request.getStatus().toUpperCase()));
+    employee.setStatus(EStatus.valueOf(request.getStatus().toUpperCase()).name());
     employeeRepository.save(employee);
     return BaseResponse.success("Status updated!");
   }
