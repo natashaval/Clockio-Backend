@@ -58,9 +58,9 @@ public class PresenceServiceImpl implements PresenceService {
     boolean photoExists = !TextUtils.isEmpty(request.getUrl());
     Photo photo = new Photo();
     if (photoExists) {
-      String faceId = faceService.faceDetect(request.getUrl());
-      boolean isSimilar = faceService.checkSimilarity(faceId, employee.getFaceListId());
-      if (!isSimilar) throw new InvalidRequestException("Face Not Match!");
+//      String faceId = faceService.faceDetect(request.getUrl());
+//      boolean isSimilar = faceService.checkSimilarity(faceId, employee.getFaceListId());
+//      if (!isSimilar) throw new InvalidRequestException("Face Not Match!");
 
       photo = photoRepository.findByUrl(request.getUrl());
     }
