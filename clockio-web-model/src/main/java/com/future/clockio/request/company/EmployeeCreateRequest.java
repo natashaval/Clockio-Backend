@@ -10,9 +10,7 @@ public class EmployeeCreateRequest {
   private String lastName;
   private String phone;
   private String email;
-
-  private String photoUrl;
-  private String faceListId;
+  private String profileUrl;
 
   private UUID departmentId;
   private UUID userId;

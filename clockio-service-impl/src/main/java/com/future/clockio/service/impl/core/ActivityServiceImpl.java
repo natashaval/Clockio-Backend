@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,6 +59,17 @@ public class ActivityServiceImpl implements ActivityService {
   public Page<Activity> findAllPageable(UUID employeeId, int page, int size) {
 //    return activityRepository.findTop5ByEmployee_IdOrderByStartTimeDesc(employeeId);
     return activityRepository.findAllByEmployee_IdOrderByDateDesc(employeeId,
+            PageRequest.of(page, size));
+  }
+
+  @Override
+  public List<Activity> findByEmployeeAndDateToday(UUID employeeId, Date date) {
+    return activityRepository.findActivityTodayByEmployee(employeeId, date);
+  }
+
+  @Override
+  public Page<Activity> findByEmployeeAndDateBetween(UUID employeeId, Date start, Date end, int page, int size) {
+    return activityRepository.findAllByEmployee_IdAndDateBetween(employeeId, start, end,
             PageRequest.of(page, size));
   }
 

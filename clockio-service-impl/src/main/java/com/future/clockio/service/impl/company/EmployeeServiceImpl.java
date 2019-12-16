@@ -1,16 +1,17 @@
 package com.future.clockio.service.impl.company;
 
 import com.future.clockio.entity.company.Employee;
+import com.future.clockio.entity.constant.EStatus;
 import com.future.clockio.entity.core.User;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.exception.InvalidRequestException;
-import com.future.clockio.repository.company.DepartmentRepository;
 import com.future.clockio.repository.company.EmployeeRepository;
-import com.future.clockio.repository.core.UserRepository;
 import com.future.clockio.request.company.EmployeeCreateRequest;
 import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
+import com.future.clockio.service.company.DepartmentService;
 import com.future.clockio.service.company.EmployeeService;
+import com.future.clockio.service.core.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +23,16 @@ import java.util.UUID;
 public class EmployeeServiceImpl implements EmployeeService {
 
   private EmployeeRepository employeeRepository;
-  private DepartmentRepository departmentRepository;
-  private UserRepository userRepository;
+  private DepartmentService departmentService;
+  private UserService userService;
 
   @Autowired
   public EmployeeServiceImpl(EmployeeRepository employeeRepository,
-                             DepartmentRepository departmentRepository,
-                             UserRepository userRepository) {
+                             DepartmentService departmentService,
+                             UserService userService) {
     this.employeeRepository = employeeRepository;
-    this.departmentRepository = departmentRepository;
-    this.userRepository = userRepository;
+    this.departmentService = departmentService;
+    this.userService = userService;
   }
 
   @Override
@@ -55,12 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     Employee newEmployee = Optional.of(this.copyProperties(employee, new Employee(), false))
             .map(employeeRepository::save)
             .orElseThrow(() -> new InvalidRequestException("Failed in adding new employee!"));
-    User user = userRepository.findById(employee.getUserId())
-            .orElseThrow(() -> new InvalidRequestException("User not found!"));
+    User user = userService.findById(employee.getUserId());
     user.setEmployeeId(newEmployee.getId());
-    userRepository.save(user);
+    userService.saveUser(user);
     return BaseResponse.success("Employee is added!");
-
   }
 
   @Override
@@ -95,7 +94,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     targetEmployee.setLastName(request.getLastName());
     targetEmployee.setEmail(request.getEmail());
     targetEmployee.setPhone(request.getPhone());
-//    targetEmployee.setPhotoUrl(request.getPhotoUrl());
+    targetEmployee.setStatus(EStatus.OFFLINE.name());
+    targetEmployee.setProfileUrl(request.getProfileUrl());
     if (!isUpdate) targetEmployee.setFaceListId(
             request.getLastName().toLowerCase() + "_" + request.getFirstName().toLowerCase()
     ); // set face list id
@@ -109,9 +109,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     if (targetEmployee.getDepartment() == null ||
             !request.getDepartmentId().equals(targetEmployee.getDepartment().getId())) {
-      targetEmployee.setDepartment(departmentRepository.findById(request.getDepartmentId())
-              .orElseThrow(() -> new DataNotFoundException("Department not found!"))
-      );
+      targetEmployee.setDepartment(departmentService.findById(request.getDepartmentId()));
     }
 
     return targetEmployee;
