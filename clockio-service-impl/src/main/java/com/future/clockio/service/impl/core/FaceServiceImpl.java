@@ -17,6 +17,7 @@ import com.future.clockio.request.company.ImageUploadRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.response.company.ImageDestroyResponse;
 import com.future.clockio.response.company.ImageUploadResponse;
+import com.future.clockio.service.company.EmployeeService;
 import com.future.clockio.service.core.CommandExecutorService;
 import com.future.clockio.service.core.FaceService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +31,17 @@ import java.util.List;
 @Service
 @Slf4j
 public class FaceServiceImpl implements FaceService {
-  private EmployeeRepository employeeRepository;
+  private EmployeeService employeeService;
   private FaceListClient faceListClient;
   private FaceClient faceClient;
   private CommandExecutorService commandExecutor;
 
   @Autowired
-  public FaceServiceImpl(EmployeeRepository repository,
+  public FaceServiceImpl(EmployeeService employeeService,
                          FaceListClient faceListClient,
                          FaceClient faceClient,
                          CommandExecutorService commandExecutor) {
-    this.employeeRepository = repository;
+    this.employeeService = employeeService;
     this.faceListClient = faceListClient;
     this.faceClient = faceClient;
     this.commandExecutor = commandExecutor;
@@ -48,8 +49,7 @@ public class FaceServiceImpl implements FaceService {
 
   @Override
   public BaseResponse findSimilar(ImageUploadRequest request) {
-    Employee employee = employeeRepository.findById(request.getEmployeeId())
-            .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
+    Employee employee = employeeService.findById(request.getEmployeeId());
 
     request.setFaceListId(employee.getFaceListId());
 

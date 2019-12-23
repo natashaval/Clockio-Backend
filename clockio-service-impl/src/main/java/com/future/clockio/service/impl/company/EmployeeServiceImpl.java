@@ -1,11 +1,13 @@
 package com.future.clockio.service.impl.company;
 
 import com.future.clockio.entity.company.Employee;
+import com.future.clockio.entity.core.User;
 import com.future.clockio.entity.constant.EStatus;
 import com.future.clockio.entity.core.User;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.exception.InvalidRequestException;
 import com.future.clockio.repository.company.EmployeeRepository;
+import com.future.clockio.repository.core.UserRepository;
 import com.future.clockio.request.company.EmployeeCreateRequest;
 import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
