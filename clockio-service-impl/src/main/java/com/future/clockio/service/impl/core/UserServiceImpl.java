@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,6 +29,17 @@ public class UserServiceImpl implements UserService {
     this.userRepository = userRepository;
     this.roleRepository = roleRepository;
     this.passwordEncoder = passwordEncoder;
+  }
+
+  @Override
+  public User findById(UUID userId) {
+    return userRepository.findById(userId)
+            .orElseThrow(() -> new InvalidRequestException("User not found!"));
+  }
+
+  @Override
+  public User saveUser(User user) {
+    return userRepository.save(user);
   }
 
   @Override

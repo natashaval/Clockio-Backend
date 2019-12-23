@@ -6,8 +6,10 @@ import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.core.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,8 +32,29 @@ public class ActivityController {
     return activityService.findAllPageable(employeeId, page, size).getContent();
   }
 
-  @PostMapping
-  public BaseResponse createActivity(@RequestBody ActivityRequest request) {
+  @GetMapping("/employee/{id}/today")
+  public List<Activity> findActivityToday(@PathVariable("id") UUID employeeId,
+                                          @RequestParam("date") @DateTimeFormat(iso =
+                                                  DateTimeFormat.ISO.DATE) Date date) {
+    return activityService.findByEmployeeAndDateToday(employeeId, date);
+  }
+
+  @GetMapping("/employee/{id}/history")
+  public Page<Activity> findActivityHistory(@PathVariable("id") UUID employeeId,
+                                            @RequestParam("start") @DateTimeFormat(iso =
+                                                    DateTimeFormat.ISO.DATE) Date start,
+                                            @RequestParam("end") @DateTimeFormat(iso =
+                                                    DateTimeFormat.ISO.DATE) Date end,
+                                            @RequestParam("page") int page,
+                                            @RequestParam("size") int size
+  ) {
+    return activityService.findByEmployeeAndDateBetween(employeeId, start, end, page, size);
+  }
+
+  @PostMapping("/employee/{id}")
+  public BaseResponse createActivity(@PathVariable("id") UUID employeeId,
+                                     @RequestBody ActivityRequest request) {
+    request.setEmployeeId(employeeId);
     return activityService.createActivity(request);
   }
 
