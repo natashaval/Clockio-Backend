@@ -98,7 +98,7 @@ public class BranchServiceTest {
 
   @Test
   public void deleteById_success() {
-    when(branchRepository.findById(BRANCH_ID)).thenReturn(branchOpt);
+    when(branchRepository.existsById(BRANCH_ID)).thenReturn(true);
     BaseResponse res = branchService.deleteById(BRANCH_ID);
     Assert.assertTrue(res.isSuccess());
     Assert.assertEquals("Branch is deleted!", res.getMessage());

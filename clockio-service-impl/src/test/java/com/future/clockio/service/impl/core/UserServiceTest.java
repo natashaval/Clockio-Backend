@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,8 +30,6 @@ public class UserServiceTest {
   private UserRepository userRepository;
   @Mock
   private RoleRepository roleRepository;
-  @Mock
-  private PasswordEncoder passwordEncoder;
 
   @InjectMocks
   private UserServiceImpl userService;

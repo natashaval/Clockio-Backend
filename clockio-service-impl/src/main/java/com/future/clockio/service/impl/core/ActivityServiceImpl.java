@@ -56,6 +56,13 @@ public class ActivityServiceImpl implements ActivityService {
   }
 
   @Override
+  public Activity findById(UUID id) {
+    Activity activity = activityRepository.findById(id)
+            .orElseThrow(() -> new DataNotFoundException("Activity not found!"));
+    return activity;
+  }
+
+  @Override
   public Page<Activity> findAllPageable(UUID employeeId, int page, int size) {
 //    return activityRepository.findTop5ByEmployee_IdOrderByStartTimeDesc(employeeId);
     return activityRepository.findAllByEmployee_IdOrderByDateDesc(employeeId,
@@ -81,11 +88,13 @@ public class ActivityServiceImpl implements ActivityService {
 
   @Override
   public BaseResponse deleteActivity(UUID id) {
-    Activity activity =
-            activityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Activity" +
-                    " not found!"));
-    activityRepository.delete(activity);
-    return BaseResponse.success("Activity deleted!");
+    Boolean exist = activityRepository.existsById(id);
+    if (exist) {
+      activityRepository.deleteById(id);
+      return BaseResponse.success("Activity deleted!");
+    } else {
+      throw new DataNotFoundException("Activity not found!");
+    }
   }
 
   private Activity copyProperties(ActivityRequest source, Activity target) {

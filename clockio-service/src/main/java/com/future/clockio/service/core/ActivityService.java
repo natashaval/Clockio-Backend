@@ -12,6 +12,7 @@ import java.util.UUID;
 public interface ActivityService {
   BaseResponse createActivity(ActivityRequest request);
   BaseResponse updateActivity(UUID id, ActivityRequest request);
+  Activity findById(UUID id);
   Page<Activity> findAllPageable(UUID employeeId, int page, int size);
   List<Activity> findByEmployeeAndDateToday(UUID employeeId, Date date);
   Page<Activity> findByEmployeeAndDateBetween(UUID employeeId, Date start, Date end, int page,

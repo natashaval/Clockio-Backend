@@ -1,11 +1,13 @@
 package com.future.clockio.request.core;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Data
+@Builder
 public class ActivityRequest {
   private UUID employeeId;
   private String title;

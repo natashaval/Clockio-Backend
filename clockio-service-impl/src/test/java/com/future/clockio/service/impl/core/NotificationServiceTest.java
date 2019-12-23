@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -100,7 +101,7 @@ public class NotificationServiceTest {
 
   @Test
   public void deleteNotif_success() {
-    when(notificationRepository.findById(anyLong())).thenReturn(notifOpt);
+    when(notificationRepository.existsById(anyLong())).thenReturn(true);
     BaseResponse res = notificationService.deleteNotification(1L);
     Assert.assertTrue(res.isSuccess());
     Assert.assertEquals("Notification deleted!", res.getMessage());

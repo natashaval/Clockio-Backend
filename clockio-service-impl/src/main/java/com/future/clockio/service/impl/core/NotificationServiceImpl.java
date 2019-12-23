@@ -53,9 +53,13 @@ public class NotificationServiceImpl implements NotificationService {
 
   @Override
   public BaseResponse deleteNotification(Long id) {
-    Notification notification = findById(id);
-    notificationRepository.deleteById(id);
-    return BaseResponse.success("Notification deleted!");
+    Boolean exist = notificationRepository.existsById(id);
+    if (exist) {
+      notificationRepository.deleteById(id);
+      return BaseResponse.success("Notification deleted!");
+    } else {
+      throw new DataNotFoundException("Notification not found!");
+    }
   }
 
   public Notification copyProperties(Notification source, Notification target) {
