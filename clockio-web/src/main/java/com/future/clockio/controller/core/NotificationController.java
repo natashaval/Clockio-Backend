@@ -14,8 +14,11 @@ public class NotificationController {
   private NotificationService notificationService;
 
   @GetMapping
-  public Page<Notification> findAll(@RequestParam("page") int page,
-                                    @RequestParam("size") int size) {
+  public Page<Notification> findAll(@RequestParam(value = "page",
+                                            required = false, defaultValue = "0") int page,
+                                    @RequestParam(value = "size",
+                                            required = false, defaultValue
+                                            = "10") int size) {
     return notificationService.findAllPageable(page, size);
   }
 
