@@ -2,6 +2,7 @@ package com.future.clockio.service.company;
 
 import com.future.clockio.entity.company.Employee;
 import com.future.clockio.request.company.EmployeeCreateRequest;
+import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface EmployeeService {
   BaseResponse updateEmployee(UUID id, EmployeeCreateRequest employee);
 
   List<Employee> findAll();
+
+  BaseResponse updateStatus(StatusRequest request);
 }
