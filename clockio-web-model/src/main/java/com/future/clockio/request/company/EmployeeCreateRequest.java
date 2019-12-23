@@ -14,6 +14,6 @@ public class EmployeeCreateRequest {
   private String photoUrl;
   private String faceListId;
 
-//  private String branchId;
   private UUID departmentId;
+  private UUID userId;
 }

@@ -9,6 +9,7 @@ import com.future.clockio.repository.core.LocationRepository;
 import com.future.clockio.request.core.LocationHistoryRequest;
 import com.future.clockio.request.core.LocationRequest;
 import com.future.clockio.response.base.BaseResponse;
+import com.future.clockio.service.company.EmployeeService;
 import com.future.clockio.service.core.LocationService;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -25,13 +26,13 @@ public class LocationServiceImpl implements LocationService {
   @Autowired
   private ObjectMapper mapper;
 
-  private EmployeeRepository employeeRepository;
   private LocationRepository locationRepository;
+  private EmployeeService employeeService;
 
   @Autowired
-  public LocationServiceImpl(EmployeeRepository employeeRepository, LocationRepository locationRepository) {
-    this.employeeRepository = employeeRepository;
+  public LocationServiceImpl(LocationRepository locationRepository, EmployeeService employeeService) {
     this.locationRepository = locationRepository;
+    this.employeeService = employeeService;
   }
 
   @Override
@@ -46,8 +47,7 @@ public class LocationServiceImpl implements LocationService {
 
   @Override
   public BaseResponse addLocation(LocationRequest request) {
-    Employee employee = employeeRepository.findById(request.getEmployeeId())
-            .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
+    Employee employee = employeeService.findById(request.getEmployeeId());
 
     Location location = mapper.convertValue(request, Location.class);
     location.setEmployee(employee);

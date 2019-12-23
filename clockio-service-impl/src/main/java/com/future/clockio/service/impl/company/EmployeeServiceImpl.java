@@ -1,11 +1,13 @@
 package com.future.clockio.service.impl.company;
 
 import com.future.clockio.entity.company.Employee;
+import com.future.clockio.entity.core.User;
 import com.future.clockio.entity.constant.EStatus;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.exception.InvalidRequestException;
 import com.future.clockio.repository.company.DepartmentRepository;
 import com.future.clockio.repository.company.EmployeeRepository;
+import com.future.clockio.repository.core.UserRepository;
 import com.future.clockio.request.company.EmployeeCreateRequest;
 import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
@@ -22,12 +24,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   private EmployeeRepository employeeRepository;
   private DepartmentRepository departmentRepository;
+  private UserRepository userRepository;
 
   @Autowired
   public EmployeeServiceImpl(EmployeeRepository employeeRepository,
-                             DepartmentRepository departmentRepository) {
+                             DepartmentRepository departmentRepository,
+                             UserRepository userRepository) {
     this.employeeRepository = employeeRepository;
     this.departmentRepository = departmentRepository;
+    this.userRepository = userRepository;
   }
 
   @Override
@@ -48,9 +53,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Override
   public BaseResponse createEmployee(EmployeeCreateRequest employee) {
-    Optional.of(this.copyProperties(employee, new Employee(), false))
+    Employee newEmployee = Optional.of(this.copyProperties(employee, new Employee(), false))
             .map(employeeRepository::save)
             .orElseThrow(() -> new InvalidRequestException("Failed in adding new employee!"));
+    User user = userRepository.findById(employee.getUserId())
+            .orElseThrow(() -> new InvalidRequestException("User not found!"));
+    user.setEmployeeId(newEmployee.getId());
+    userRepository.save(user);
     return BaseResponse.success("Employee is added!");
 
   }
