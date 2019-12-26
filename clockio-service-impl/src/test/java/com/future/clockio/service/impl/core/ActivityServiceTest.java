@@ -14,12 +14,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.future.clockio.service.impl.helper.EntityMock.EMPLOYEE;
+import static com.future.clockio.service.impl.helper.EntityMock.EMP_ID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -33,16 +34,11 @@ public class ActivityServiceTest {
   @Mock
   private EmployeeService employeeService;
 
-  @Spy
+  @Mock
   private ObjectMapper mapper;
 
   @InjectMocks
   private ActivityServiceImpl activityService;
-
-  private static final UUID EMP_ID = UUID.randomUUID();
-  private static final String EMP_NAME = "Employee";
-  private static final Employee EMPLOYEE =
-          Employee.builder().id(EMP_ID).firstName(EMP_NAME).build();
 
   private static final UUID ACT_ID = UUID.randomUUID();
   private static final String ACT_TITLE = "Activity";
@@ -96,12 +92,9 @@ public class ActivityServiceTest {
 
   @Test
   public void createActivity() {
-    String actNewTitle = "New Activity";
-    String actNewContent = "New Activity Content";
     ActivityRequest request = ActivityRequest.builder()
-                    .title(actNewTitle).content(actNewContent).employeeId(EMP_ID).build();
+                    .title(ACT_TITLE).content(ACT_CONTENT).employeeId(EMP_ID).build();
     mockEmployee();
-//    when(mapper.convertValue(any(), eq(Activity.class))).thenReturn(ACTIVITY);
     doReturn(ACTIVITY).when(mapper).convertValue(any(), eq(Activity.class));
     BaseResponse res = activityService.createActivity(request);
     Assert.assertTrue(res.isSuccess());

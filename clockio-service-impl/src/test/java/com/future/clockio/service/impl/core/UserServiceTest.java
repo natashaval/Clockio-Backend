@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
+import static com.future.clockio.service.impl.helper.EntityMock.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -39,11 +40,6 @@ public class UserServiceTest {
           .password("pass")
           .roleId(1)
           .build();
-  private static final Role ROLE = new Role(1, Erole.ROLE_ADMIN.toString());
-  private static final UUID USER_ID = UUID.randomUUID();
-  private static final String USER_PASSWORD = new BCryptPasswordEncoder().encode("pass");
-  private static final User USER = new User(USER_ID, "user", USER_PASSWORD, null,
-          ROLE, true, true, true, true);
 
   @Test
   public void addUser_roleNotFound() {

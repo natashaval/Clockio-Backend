@@ -25,13 +25,14 @@ import java.util.UUID;
 @Service
 public class ActivityServiceImpl implements ActivityService {
 
-  @Autowired
   private ObjectMapper mapper;
   private ActivityRepository activityRepository;
   private EmployeeService employeeService;
 
   @Autowired
-  public ActivityServiceImpl(ActivityRepository activityRepository, EmployeeService employeeService) {
+  public ActivityServiceImpl(ObjectMapper mapper, ActivityRepository activityRepository,
+                             EmployeeService employeeService) {
+    this.mapper = mapper;
     this.activityRepository = activityRepository;
     this.employeeService = employeeService;
   }

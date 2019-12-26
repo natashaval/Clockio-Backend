@@ -15,6 +15,9 @@ import com.future.clockio.service.company.DepartmentService;
 import com.future.clockio.service.company.EmployeeService;
 import com.future.clockio.service.core.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,13 +48,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Override
   public BaseResponse deleteById(UUID id) {
-    Employee exist = employeeRepository.findById(id)
-            .orElseThrow(() -> new DataNotFoundException("Employee not found!"));
-    if (exist != null) {
+    Boolean exist = employeeRepository.existsById(id);
+    if (exist) {
       employeeRepository.deleteById(id);
       return BaseResponse.success("Employee is removed!");
+    } else {
+      throw new DataNotFoundException("Employee not found!");
     }
-    else throw new InvalidRequestException("Failed in remove employee!");  }
+  }
 
   @Override
   public BaseResponse createEmployee(EmployeeCreateRequest employee) {
@@ -71,14 +75,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             .orElseThrow(() -> new DataNotFoundException("Employee not found!"))
             .map(exist -> this.copyProperties(employee, exist, true))
             .map(employeeRepository::save);
-//            .orElse(exist);
 
     return BaseResponse.success("Employee is updated!");
   }
 
   @Override
-  public List<Employee> findAll() {
-    return employeeRepository.findAll();
+  public Page<Employee> findAll(int page, int size) {
+    return employeeRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,
+            "firstName")));
   }
 
   @Override

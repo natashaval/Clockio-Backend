@@ -11,26 +11,24 @@ import com.future.clockio.request.core.LocationRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.EmployeeService;
 import com.future.clockio.service.core.LocationService;
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class LocationServiceImpl implements LocationService {
 
-  @Autowired
   private ObjectMapper mapper;
-
   private LocationRepository locationRepository;
   private EmployeeService employeeService;
 
   @Autowired
-  public LocationServiceImpl(LocationRepository locationRepository, EmployeeService employeeService) {
+  public LocationServiceImpl(ObjectMapper mapper, LocationRepository locationRepository,
+                             EmployeeService employeeService) {
+    this.mapper = mapper;
     this.locationRepository = locationRepository;
     this.employeeService = employeeService;
   }

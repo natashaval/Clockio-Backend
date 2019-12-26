@@ -4,6 +4,7 @@ import com.future.clockio.entity.company.Employee;
 import com.future.clockio.request.company.EmployeeCreateRequest;
 import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +18,7 @@ public interface EmployeeService {
 
   BaseResponse updateEmployee(UUID id, EmployeeCreateRequest employee);
 
-  List<Employee> findAll();
+  Page<Employee> findAll(int page, int size);
 
   BaseResponse updateStatus(StatusRequest request);
 }

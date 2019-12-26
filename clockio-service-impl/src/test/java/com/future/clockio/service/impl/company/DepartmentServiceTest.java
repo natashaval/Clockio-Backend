@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.future.clockio.service.impl.helper.EntityMock.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -29,14 +30,6 @@ public class DepartmentServiceTest {
   @InjectMocks
   private DepartmentServiceImpl departmentService;
 
-
-  private static final String DEPT_NAME = "Department";
-  private static final UUID DEPT_ID = UUID.randomUUID();
-  private static final String DEPT_BRANCH_ID = UUID.randomUUID().toString();
-  private static final Department DEPARTMENT = Department.builder()
-          .id(DEPT_ID)
-          .name(DEPT_NAME)
-          .branchId(DEPT_BRANCH_ID).build();
   private Optional<Department> deptOpt;
 
   @Before
@@ -50,7 +43,7 @@ public class DepartmentServiceTest {
     Department department = departmentService.findById(DEPT_ID);
     Assert.assertEquals(DEPT_ID, department.getId());
     Assert.assertEquals(DEPT_NAME, department.getName());
-    Assert.assertEquals(DEPT_BRANCH_ID, department.getBranchId());
+    Assert.assertEquals(BRANCH_ID.toString(), department.getBranchId());
   }
 
   @Test
@@ -109,7 +102,7 @@ public class DepartmentServiceTest {
   @Test
   public void updateDept_Success() {
     String deptNewName = "new Department";
-    Department target = new Department(DEPT_ID, deptNewName, DEPT_BRANCH_ID);
+    Department target = new Department(DEPT_ID, deptNewName, BRANCH_ID.toString());
     when(departmentRepository.findById(DEPT_ID)).thenReturn(deptOpt);
     BaseResponse res = departmentService.updateDepartment(DEPT_ID, target);
     Assert.assertTrue(res.isSuccess());
