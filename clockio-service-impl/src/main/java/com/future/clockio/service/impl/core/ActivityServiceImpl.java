@@ -83,7 +83,7 @@ public class ActivityServiceImpl implements ActivityService {
 
   @Override
   public Page<Activity> findAll(int page, int size) {
-    return activityRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,
+    return activityRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,
             "date")));
   }
 

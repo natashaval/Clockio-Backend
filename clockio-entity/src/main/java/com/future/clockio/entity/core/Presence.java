@@ -1,7 +1,6 @@
 package com.future.clockio.entity.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.future.clockio.entity.base.BaseEntity;
 import com.future.clockio.entity.company.Employee;
 import com.future.clockio.entity.company.Photo;
 import com.future.clockio.entity.constant.DocumentName;
