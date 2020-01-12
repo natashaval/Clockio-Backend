@@ -39,6 +39,7 @@
     <spring.cloud.starter.openfeign.version>2.1.2.RELEASE</spring.cloud.starter.openfeign.version>
     <feign.httpclient.version>10.5.0</feign.httpclient.version>
     <joda.time.version>2.10.5</joda.time.version>
+    <firebase.admin.version>6.12.0</firebase.admin.version>
   </properties>
 
   <dependencies>
@@ -159,6 +160,11 @@
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
         <version>${joda.time.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.firebase</groupId>
+        <artifactId>firebase-admin</artifactId>
+        <version>${firebase.admin.version}</version>
       </dependency>
 
 
