@@ -1,6 +1,7 @@
 package com.future.clockio.controller.firebase;
 
 import com.future.clockio.client.firebase.PushNotificationService;
+import com.future.clockio.client.firebase.PushNotificationServiceImpl;
 import com.future.clockio.client.model.request.PushNotificationRequest;
 import com.future.clockio.client.model.response.PushNotificationResponse;
 import org.springframework.beans.factory.annotation.Autowired;

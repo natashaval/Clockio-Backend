@@ -1,5 +1,7 @@
 package com.future.clockio.service.impl.core;
 
+import com.future.clockio.client.firebase.PushNotificationService;
+import com.future.clockio.client.model.request.PushNotificationRequest;
 import com.future.clockio.entity.core.Notification;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.repository.core.NotificationRepository;
@@ -21,12 +23,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NotificationServiceTest {
   @Mock
   private NotificationRepository notificationRepository;
+
+  @Mock
+  private PushNotificationService pushNotificationService;
 
   @InjectMocks
   private NotificationServiceImpl notificationService;
@@ -78,6 +83,7 @@ public class NotificationServiceTest {
       notificationService.createNotification(NOTIFICATION);
     } catch (DataNotFoundException e) {
       Assert.assertEquals("Notification not found!", e.getMessage());
+      verify(pushNotificationService, times(0)).sendPushNotificationWithoutData(any(PushNotificationRequest.class));
     }
   }
 
@@ -87,6 +93,7 @@ public class NotificationServiceTest {
     BaseResponse res = notificationService.createNotification(NOTIFICATION);
     Assert.assertTrue(res.isSuccess());
     Assert.assertEquals("Notification created!", res.getMessage());
+    verify(pushNotificationService, times(1)).sendPushNotificationWithoutData(any(PushNotificationRequest.class));
   }
 
   @Test

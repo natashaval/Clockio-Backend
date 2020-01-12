@@ -1,6 +1,10 @@
 package com.future.clockio.service.impl.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.future.clockio.client.firebase.PushNotificationService;
+import com.future.clockio.client.firebase.PushNotificationServiceImpl;
+import com.future.clockio.client.model.request.PushNotificationRequest;
+import com.future.clockio.entity.constant.FirebaseTopic;
 import com.future.clockio.entity.core.Notification;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.repository.core.NotificationRepository;
@@ -17,11 +21,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
   private NotificationRepository notificationRepository;
+  private PushNotificationService pushNotificationService;
   private ObjectMapper mapper;
 
   @Autowired
-  public NotificationServiceImpl(NotificationRepository notificationRepository, ObjectMapper objectMapper) {
+  public NotificationServiceImpl(NotificationRepository notificationRepository,
+                                 PushNotificationService pushNotificationService,
+                                 ObjectMapper objectMapper) {
     this.notificationRepository = notificationRepository;
+    this.pushNotificationService = pushNotificationService;
     this.mapper = objectMapper;
   }
 
@@ -39,7 +47,11 @@ public class NotificationServiceImpl implements NotificationService {
 
   @Override
   public BaseResponse createNotification(Notification notification) {
+    PushNotificationRequest pushNotificationRequest = new PushNotificationRequest(
+            notification.getTitle(), notification.getContent(), FirebaseTopic.topic
+    );
     notificationRepository.save(notification);
+    pushNotificationService.sendPushNotificationWithoutData(pushNotificationRequest);
     return BaseResponse.success("Notification created!");
   }
 
