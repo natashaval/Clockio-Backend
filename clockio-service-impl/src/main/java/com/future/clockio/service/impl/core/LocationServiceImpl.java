@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.future.clockio.entity.company.Employee;
 import com.future.clockio.entity.core.Location;
 import com.future.clockio.exception.DataNotFoundException;
-import com.future.clockio.repository.company.EmployeeRepository;
 import com.future.clockio.repository.core.LocationRepository;
-import com.future.clockio.request.core.LocationHistoryRequest;
 import com.future.clockio.request.core.LocationRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.EmployeeService;
@@ -15,6 +13,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,13 +33,12 @@ public class LocationServiceImpl implements LocationService {
   }
 
   @Override
-  public List<Location> findEmployeeLocation(LocationHistoryRequest request) {
+  public List<Location> findEmployeeLocation(UUID employeeId, Date start, Date end) {
 //    https://www.joda.org/joda-time/apidocs/org/joda/time/DateTime.html#withTimeAtStartOfDay%28%29
-    DateTime start = new DateTime(request.getYear(), request.getMonth(), request.getDay(), 0, 0);
-    start.withTimeAtStartOfDay();
-    DateTime end = start.plusHours(23).plusMinutes(59).plusSeconds(59);
-    return locationRepository.findAllByEmployee_IdAndCreatedAtBetween(request.getEmployeeId(),
-            start.toDate(), end.toDate());
+    DateTime startDateTime = new DateTime(start).withTime(0,0,0,0);
+    DateTime endDateTime = new DateTime(end).withTime(23,59,59,999);
+    return locationRepository.findAllByEmployee_IdAndCreatedAtBetween(employeeId,
+            startDateTime.toDate(), endDateTime.toDate());
   }
 
   @Override

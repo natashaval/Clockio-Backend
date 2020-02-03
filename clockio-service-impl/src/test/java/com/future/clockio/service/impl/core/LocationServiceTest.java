@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.future.clockio.entity.core.Location;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.repository.core.LocationRepository;
-import com.future.clockio.request.core.LocationHistoryRequest;
 import com.future.clockio.request.core.LocationRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.EmployeeService;
@@ -38,6 +37,7 @@ public class LocationServiceTest {
   private LocationServiceImpl locationService;
 
   private static final UUID LOCATION_ID = UUID.randomUUID();
+  private static final Date DATE_NOW = new Date();
   private static final Location LOCATION = Location.builder()
           .id(LOCATION_ID)
           .employee(EMPLOYEE)
@@ -81,11 +81,10 @@ public class LocationServiceTest {
 
   @Test
   public void findEmployeeLocation() {
-    LocationHistoryRequest request = new LocationHistoryRequest(EMP_ID, 2019, 12, 12);
     List<Location> locationList = Collections.singletonList(LOCATION);
     when(locationRepository.findAllByEmployee_IdAndCreatedAtBetween(any(UUID.class),
             any(Date.class), any(Date.class))).thenReturn(locationList);
-    List<Location> res = locationService.findEmployeeLocation(request);
+    List<Location> res = locationService.findEmployeeLocation(EMP_ID, DATE_NOW, DATE_NOW);
     Assert.assertEquals(locationList, res);
     Assert.assertEquals(locationList.size(), res.size());
   }

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Date;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -102,6 +103,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     targetEmployee.setPhone(request.getPhone());
     targetEmployee.setStatus(EStatus.OFFLINE.name());
     targetEmployee.setProfileUrl(request.getProfileUrl());
+    targetEmployee.setLastCheckIn(new Date());
+    targetEmployee.setLastLatitude(0.0);
+    targetEmployee.setLastLongitude(0.0);
     if (!isUpdate) targetEmployee.setFaceListId(
             request.getLastName().toLowerCase() + "_" + request.getFirstName().toLowerCase()
     ); // set face list id

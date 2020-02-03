@@ -1,13 +1,14 @@
 package com.future.clockio.controller.core;
 
 import com.future.clockio.entity.core.Location;
-import com.future.clockio.request.core.LocationHistoryRequest;
 import com.future.clockio.request.core.LocationRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.core.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,15 +20,11 @@ public class LocationController {
 
   @GetMapping("/{id}/history")
   public List<Location> getLocationHistory(@PathVariable("id") UUID id,
-                                           @RequestParam("y") int year,
-                                           @RequestParam("m") int month,
-                                           @RequestParam("d") int day) {
-    LocationHistoryRequest request = new LocationHistoryRequest();
-    request.setEmployeeId(id);
-    request.setYear(year);
-    request.setMonth(month);
-    request.setDay(day);
-    return locationService.findEmployeeLocation(request);
+                                           @RequestParam("start") @DateTimeFormat(iso =
+                                                   DateTimeFormat.ISO.DATE) Date start,
+                                           @RequestParam("end") @DateTimeFormat(iso =
+                                                   DateTimeFormat.ISO.DATE) Date end) {
+    return locationService.findEmployeeLocation(id, start, end);
   }
 
   @GetMapping("/{id}") // location id

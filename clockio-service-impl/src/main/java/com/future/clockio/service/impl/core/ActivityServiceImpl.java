@@ -11,6 +11,7 @@ import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.EmployeeService;
 import com.future.clockio.service.core.ActivityService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -77,8 +78,10 @@ public class ActivityServiceImpl implements ActivityService {
 
   @Override
   public Page<Activity> findByEmployeeAndDateBetween(UUID employeeId, Date start, Date end, int page, int size) {
-    return activityRepository.findAllByEmployee_IdAndDateBetween(employeeId, start, end,
-            PageRequest.of(page, size));
+    DateTime startDateTime = new DateTime(start).withTime(0,0,0,0);
+    DateTime endDateTime = new DateTime(end).withTime(23,59,59,999);
+    return activityRepository.findAllByEmployee_IdAndDateBetween(employeeId,
+            startDateTime.toDate(), endDateTime.toDate(), PageRequest.of(page, size));
   }
 
   @Override
