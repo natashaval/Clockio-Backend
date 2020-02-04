@@ -101,8 +101,7 @@ public class DepartmentServiceTest {
 
   @Test
   public void updateDept_Success() {
-    String deptNewName = "new Department";
-    Department target = new Department(DEPT_ID, deptNewName, BRANCH_ID.toString());
+    Department target = new Department(DEPT_ID, DEPT_NAME, BRANCH_ID.toString());
     when(departmentRepository.findById(DEPT_ID)).thenReturn(deptOpt);
     BaseResponse res = departmentService.updateDepartment(DEPT_ID, target);
     Assert.assertTrue(res.isSuccess());

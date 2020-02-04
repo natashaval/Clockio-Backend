@@ -31,6 +31,8 @@ public class UserServiceTest {
   private UserRepository userRepository;
   @Mock
   private RoleRepository roleRepository;
+  @Mock
+  private PasswordEncoder passwordEncoder;
 
   @InjectMocks
   private UserServiceImpl userService;
