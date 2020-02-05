@@ -8,6 +8,7 @@ import com.future.clockio.entity.core.Role;
 import com.future.clockio.entity.core.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -39,4 +40,10 @@ public class EntityMock {
   private static final String USER_PASSWORD = new BCryptPasswordEncoder().encode("pass");
   public static final User USER = new User(USER_ID, "user", USER_PASSWORD, null,
           ROLE, true, true, true, true);
+
+  // Pageable
+  public static final int PAGE_START = 0;
+  public static final int PAGE_SIZE = 5;
+  public static final Date DATE_NOW = new Date();
+
 }

@@ -28,9 +28,6 @@ import java.util.Map;
 @Slf4j
 public class ImageServiceImpl implements ImageService {
 
-  @Autowired
-  private ObjectMapper mapper;
-
   private CommandExecutorService commandExecutor;
   private PhotoRepository photoRepository;
   private EmployeeService employeeService;
@@ -52,7 +49,7 @@ public class ImageServiceImpl implements ImageService {
     ImageUploadResponse imageResponse =
             commandExecutor.executeCommand(ImageUploadCommand.class, request);
     log.info("Image Upload Response" + imageResponse);
-    Photo photo = mapper.convertValue(imageResponse, Photo.class);
+    Photo photo = new Photo();
     photo.setUrl(imageResponse.getUrl());
     photo.setPublicId(imageResponse.getPublicId());
     photo.setEmployee(employee);

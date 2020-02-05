@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -48,6 +49,12 @@ public class PresenceServiceImpl implements PresenceService {
   @Override
   public List<Presence> findAll() {
     return presenceRepository.findAll();
+  }
+
+  @Override
+  public Presence findById(UUID id) {
+    return presenceRepository.findById(id)
+            .orElseThrow(() -> new DataNotFoundException("Presence not found!"));
   }
 
   @Override
@@ -88,8 +95,7 @@ public class PresenceServiceImpl implements PresenceService {
 
   @Override
   public BaseResponse checkOut(PresenceRequest request) {
-    Presence presence = presenceRepository.findById(request.getPresenceId())
-            .orElseThrow(() -> new InvalidRequestException("Presence not found!"));
+    Presence presence = findById(request.getPresenceId());
     presence.setCheckOut(new Date()); // get current timestamp
     Presence presenceResult = presenceRepository.save(presence);
 

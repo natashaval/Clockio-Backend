@@ -1,6 +1,7 @@
 package com.future.clockio.entity.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.future.clockio.entity.company.Employee;
 import com.future.clockio.entity.company.Photo;
 import com.future.clockio.entity.constant.DocumentName;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Entity
 @Table(name = DocumentName.PRESENCE)
 @JsonIgnoreProperties({"employee"})
+@JsonInclude(value = JsonInclude.Include.NON_DEFAULT)
 public class Presence {
   // Presence's Done Today
   @Id

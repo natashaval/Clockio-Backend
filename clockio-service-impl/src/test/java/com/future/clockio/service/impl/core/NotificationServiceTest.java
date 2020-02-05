@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.future.clockio.service.impl.helper.EntityMock.PAGE_SIZE;
+import static com.future.clockio.service.impl.helper.EntityMock.PAGE_START;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -73,7 +75,7 @@ public class NotificationServiceTest {
     List<Notification> notifList = Collections.singletonList(NOTIFICATION);
     Page<Notification> notifPage = new PageImpl<>(notifList);
     when(notificationRepository.findAll(ArgumentMatchers.isA(Pageable.class))).thenReturn(notifPage);
-    Page<Notification> result = notificationService.findAllPageable(0, 5);
+    Page<Notification> result = notificationService.findAllPageable(PAGE_START, PAGE_SIZE);
     Assert.assertEquals(notifList.size(), result.getTotalElements());
   }
 

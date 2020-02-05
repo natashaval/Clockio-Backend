@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Service
@@ -49,10 +48,16 @@ public class UserServiceImpl implements UserService {
   }
 
   @PostConstruct
-  private void setupDefaultUser() {
+  public void init() {
+    setupUser();
+  }
+
+  private void setupUser() {
     if (userRepository.count() == 0) {
       Role roleAdmin = new Role(Erole.ROLE_ADMIN.toString());
+      Role roleUser = new Role(Erole.ROLE_USER.toString());
       roleRepository.save(roleAdmin);
+      roleRepository.save(roleUser);
       userRepository.save(new User("admin", passwordEncoder.encode("admin"),
               roleAdmin));
     }

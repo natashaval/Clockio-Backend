@@ -49,11 +49,9 @@ public class ActivityServiceImpl implements ActivityService {
 
   @Override
   public BaseResponse updateActivity(UUID id, ActivityRequest request) {
-    Optional.of(id)
-            .map(activityRepository::findById)
-            .orElseThrow(() -> new DataNotFoundException("Activity not found!"))
-            .map(exist -> this.copyProperties(request, exist))
-            .map(activityRepository::save);
+    Activity activity = findById(id);
+    activity = copyProperties(request, activity);
+    activityRepository.save(activity);
     return BaseResponse.success("Activity updated!");
   }
 
@@ -66,7 +64,6 @@ public class ActivityServiceImpl implements ActivityService {
 
   @Override
   public Page<Activity> findAllPageable(UUID employeeId, int page, int size) {
-//    return activityRepository.findTop5ByEmployee_IdOrderByStartTimeDesc(employeeId);
     return activityRepository.findAllByEmployee_IdOrderByDateDesc(employeeId,
             PageRequest.of(page, size));
   }
