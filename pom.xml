@@ -34,7 +34,8 @@
     <spring.cloud.starter.openfeign.version>2.1.2.RELEASE</spring.cloud.starter.openfeign.version>  
     <feign.httpclient.version>10.5.0</feign.httpclient.version>  
     <joda.time.version>2.10.5</joda.time.version>  
-    <firebase.admin.version>6.12.0</firebase.admin.version> 
+    <firebase.admin.version>6.12.0</firebase.admin.version>
+    <rest.assured.version>4.1.2</rest.assured.version>
   </properties>  
   <dependencies> 
     <dependency> 
@@ -157,7 +158,37 @@
         <groupId>com.google.firebase</groupId>  
         <artifactId>firebase-admin</artifactId>  
         <version>${firebase.admin.version}</version> 
-      </dependency> 
+      </dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>${rest.assured.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured-common</artifactId>
+        <version>${rest.assured.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>json-path</artifactId>
+        <version>${rest.assured.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>xml-path</artifactId>
+        <version>${rest.assured.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>json-schema-validator</artifactId>
+        <version>${rest.assured.version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies> 
   </dependencyManagement>  
   <build> 
