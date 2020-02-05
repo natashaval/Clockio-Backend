@@ -50,5 +50,4 @@ public class UserControllerTest {
             .andExpect(jsonPath("$.role.id", is(1)))
             .andExpect(jsonPath("$.role.role", is(Erole.ROLE_ADMIN.toString())));
   }
-
 }

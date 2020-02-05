@@ -36,7 +36,7 @@ public class AuthIntegrationTest {
     requestToken();
   }
 
-  public String requestToken() throws JSONException {
+  public static String requestToken() throws JSONException {
 //    https://www.javacodemonk.com/oauth2-protected-resources-in-restassured-testcases-7d85a51f
     log.info("Getting OAuth Token");
     Response response = given().auth().preemptive().basic(CLIENT_ID, CLIENT_SECRET)
@@ -57,9 +57,8 @@ public class AuthIntegrationTest {
   public void userProfile() {
     given().header("Authorization", "Bearer " + UserConst.accessToken)
             .get("/api/profile")
-            .then()
-            .assertThat().statusCode(HttpStatus.OK.value())
+            .then().assertThat()
+            .statusCode(HttpStatus.OK.value())
             .body("username", equalTo("bebek"));
-
   }
 }
