@@ -3,6 +3,7 @@ package com.future.clockio.restassured.core;
 import com.future.clockio.ClockioApplication;
 import io.restassured.RestAssured;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ public class NotificationIntegrationTest {
   }
 
   @Test
+  @Ignore
   public void hello() {
     get("/about").then()
             .assertThat()

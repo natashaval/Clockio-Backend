@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,6 +55,7 @@ public class AuthIntegrationTest {
   }
 
   @Test
+  @Ignore
   public void userProfile() {
     given().header("Authorization", "Bearer " + UserConst.accessToken)
             .get("/api/profile")

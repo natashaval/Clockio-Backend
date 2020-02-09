@@ -66,7 +66,7 @@ public class LocationControllerTest {
   @Test
   public void findById() throws Exception {
     when(locationService.findById(any(UUID.class))).thenReturn(LOCATION);
-    mvc.perform(get(LOCATION_API + "/{id}", 1)
+    mvc.perform(get(LOCATION_API + "/{id}", EMP_ID)
     .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.latitude", is(DOUBLE_RANDOM)))

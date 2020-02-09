@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.json.JSONException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,6 +43,7 @@ public class UserIntegrationTest {
   }
 
   @Test
+  @Ignore
   public void createUser() {
     UserRequest userRequest = new UserRequest(USER_USERNAME, USER_PASSWORD, 1);
     given().header(UserConst.headerAuth, "Bearer " + UserConst.accessToken)

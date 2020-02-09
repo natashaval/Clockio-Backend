@@ -26,9 +26,6 @@ public class ImageUploadCommandImpl implements ImageUploadCommand {
   @Autowired
   private ObjectMapper mapper;
 
-  @Autowired
-  private EmployeeRepository employeeRepository;
-
   @Override
   public ImageUploadResponse execute(ImageUploadRequest request) {
     ImageUploadResponse response;
@@ -44,6 +41,7 @@ public class ImageUploadCommandImpl implements ImageUploadCommand {
                       "transformation", transformation
               ));
       response = mapper.convertValue(result, ImageUploadResponse.class);
+      log.info("image upload response {}", response);
     } catch (Exception e) {
       log.error("Error in uploading image to Cloudinary", e.getMessage());
       e.printStackTrace();

@@ -65,6 +65,7 @@ public class ImageServiceImpl implements ImageService {
   public BaseResponse destroyImage(ImageDestroyRequest request) {
     log.info("Image Destroy request" + request);
     ImageDestroyResponse response = commandExecutor.executeCommand(ImageDestroyCommand.class, request);
+    log.info("image destroy response {}", response);
 //    response.getDeleted().forEach((k,v) -> {
 //      if (v.equals("deleted")) {
 //        if (employee.getPhotoUrl().contains(k)) employee.getPhotoUrl().remove(k);

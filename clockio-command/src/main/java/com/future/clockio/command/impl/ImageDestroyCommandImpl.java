@@ -37,6 +37,7 @@ public class ImageDestroyCommandImpl implements ImageDestroyCommand {
         result = cloudinary.api().deleteResources(request.getPublicId(), ObjectUtils.emptyMap());
       }
       response = mapper.convertValue(result, ImageDestroyResponse.class);
+      log.info("image destroy response {}", response);
     } catch (Exception e) {
       log.error("Failed to delete resources in Cloudinary", e.getMessage());
       e.printStackTrace();
