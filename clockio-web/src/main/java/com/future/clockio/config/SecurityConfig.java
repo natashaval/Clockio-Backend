@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/auth/**", "/oauth2/**",
                     "/oauth/token",
                     "/about", "/test",
+                    "/firebase/**",
                     "/swagger-ui.html",
                     "/v2/api-docs",
                     "/docs",

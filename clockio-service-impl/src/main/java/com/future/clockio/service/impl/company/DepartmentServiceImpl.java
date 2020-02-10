@@ -1,11 +1,13 @@
 package com.future.clockio.service.impl.company;
 
+import com.future.clockio.entity.company.Branch;
 import com.future.clockio.entity.company.Department;
 import com.future.clockio.exception.DataNotFoundException;
 import com.future.clockio.exception.InvalidRequestException;
 import com.future.clockio.repository.company.BranchRepository;
 import com.future.clockio.repository.company.DepartmentRepository;
 import com.future.clockio.response.base.BaseResponse;
+import com.future.clockio.service.company.BranchService;
 import com.future.clockio.service.company.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +18,12 @@ import java.util.UUID;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
+
   private DepartmentRepository departmentRepository;
 
-  private BranchRepository branchRepository;
-
   @Autowired
-  public DepartmentServiceImpl(DepartmentRepository departmentRepository, BranchRepository branchRepository) {
+  public DepartmentServiceImpl(DepartmentRepository departmentRepository) {
     this.departmentRepository = departmentRepository;
-    this.branchRepository = branchRepository;
   }
 
   @Override
@@ -34,13 +34,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   @Override
   public BaseResponse deleteById(UUID id) {
-    Department exist = departmentRepository.findById(id)
-            .orElseThrow(() -> new DataNotFoundException("Department not found!"));
-    if (exist != null) {
+    Boolean exist = departmentRepository.existsById(id);
+    if (exist) {
       departmentRepository.deleteById(id);
       return BaseResponse.success("Department is deleted!");
+    } else {
+      throw new DataNotFoundException("Department not found!");
     }
-    else throw new InvalidRequestException("Failed in delete Department!");
   }
 
   @Override
@@ -68,11 +68,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     return departmentRepository.findAll();
   }
 
-  private Department copyProperties(Department department, Department targetDepartment) {
-//    Branch branch = branchRepository.findById(department.getBranchId())
-//            .orElseThrow(() -> new DataNotFoundException("Branch not found!"));
+  public Department copyProperties(Department department, Department targetDepartment) {
     targetDepartment.setName(department.getName());
-//    targetDepartment.setBranch(branch);
     targetDepartment.setBranchId(department.getBranchId());
     return targetDepartment;
   }

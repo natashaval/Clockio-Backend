@@ -8,8 +8,8 @@ import com.future.clockio.service.company.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,7 +24,10 @@ public class EmployeeController {
   }
 
   @GetMapping
-  public List<Employee> getEmployees() {return employeeService.findAll();}
+  public Page<Employee> getEmployees(
+          @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+          @RequestParam(value = "size", required = false, defaultValue = "10") int size)
+  {return employeeService.findAll(page, size);}
 
   @GetMapping(value = "/{id}")
   public Employee getEmployee(@PathVariable("id") UUID id) { return employeeService.findById(id);}
@@ -37,7 +40,7 @@ public class EmployeeController {
 
   @PutMapping(value = "/{id}")
   public BaseResponse updateEmployee(@PathVariable("id") UUID id,
-                                       @RequestBody EmployeeCreateRequest request) {
+                                     @RequestBody EmployeeCreateRequest request) {
     return employeeService.updateEmployee(id, request);
   }
 

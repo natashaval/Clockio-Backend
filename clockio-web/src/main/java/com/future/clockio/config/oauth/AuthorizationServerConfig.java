@@ -24,6 +24,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   private static final String clientSecret = "SuperSecret";
   private static final int ONE_HOUR = 60 * 60;
   private static final int ONE_DAY = ONE_HOUR * 24;
+  private static final int ONE_WEEK = ONE_DAY * 7;
   private static final int THIRTY_DAYS = ONE_DAY * 30;
 
   @Autowired
@@ -53,7 +54,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             .authorizedGrantTypes("password", "refresh_token")
             .authorities("ROLE_ADMIN", "ROLE_USER")
             .scopes("read", "write", "trust")
-            .accessTokenValiditySeconds(ONE_HOUR)
+            .accessTokenValiditySeconds(ONE_WEEK)
             .refreshTokenValiditySeconds(THIRTY_DAYS);
   }
 

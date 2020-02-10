@@ -23,16 +23,11 @@ public class Notification extends BaseEntity {
   private Long id;
 
   private String title;
-
   private String content;
 
   private double latitude;
   private double longitude;
 
   private Date startDate;
-
   private Date endDate;
-
-//  private List<String> seenBy;
-  // keep track of who has Seen Notification by employeeId;
 }

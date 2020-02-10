@@ -6,6 +6,7 @@ import com.future.clockio.exception.InvalidRequestException;
 import com.future.clockio.repository.company.BranchRepository;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.BranchService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,13 @@ public class BranchServiceImpl implements BranchService {
 
   @Override
   public BaseResponse deleteById(UUID id) {
-    Branch exist = branchRepository.findById(id)
-            .orElseThrow(() -> new DataNotFoundException("Branch not found!"));
-    branchRepository.deleteById(id);
-    return BaseResponse.success("Branch is deleted!");
+    Boolean exist = branchRepository.existsById(id);
+    if (exist) {
+      branchRepository.deleteById(id);
+      return BaseResponse.success("Branch is deleted!");
+    } else {
+      throw new DataNotFoundException("Branch not found!");
+    }
   }
 
   @Override

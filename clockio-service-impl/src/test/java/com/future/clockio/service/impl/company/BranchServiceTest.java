@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.*;
 
+import static com.future.clockio.service.impl.helper.EntityMock.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -28,13 +29,7 @@ public class BranchServiceTest {
   @InjectMocks
   private BranchServiceImpl branchService;
 
-  private static final UUID BRANCH_ID = UUID.randomUUID();
-  private static final String BRANCH_NAME = "Technology";
-  private static final String BRANCH_CITY = "Jakarta";
-  private static final String BRANCH_COUNTRY = "Indonesia";
-  private static final double DOUBLE_RANDOM = new Random().nextDouble();
-  private static final Branch BRANCH = new Branch(BRANCH_ID, BRANCH_NAME, BRANCH_CITY,
-          BRANCH_COUNTRY, DOUBLE_RANDOM, DOUBLE_RANDOM);
+
   private Optional<Branch> branchOpt;
 
   @Before
@@ -48,8 +43,6 @@ public class BranchServiceTest {
     Branch res = branchService.findById(BRANCH_ID);
     Assert.assertEquals(BRANCH_ID, res.getId());
     Assert.assertEquals(BRANCH_NAME, res.getName());
-    Assert.assertEquals(BRANCH_CITY, res.getCity());
-    Assert.assertEquals(BRANCH_COUNTRY, res.getCountry());
     Assert.assertEquals(DOUBLE_RANDOM, res.getLatitude(), 0.01);
     Assert.assertEquals(DOUBLE_RANDOM, res.getLongitude(), 0.01);
   }
@@ -98,7 +91,7 @@ public class BranchServiceTest {
 
   @Test
   public void deleteById_success() {
-    when(branchRepository.findById(BRANCH_ID)).thenReturn(branchOpt);
+    when(branchRepository.existsById(BRANCH_ID)).thenReturn(true);
     BaseResponse res = branchService.deleteById(BRANCH_ID);
     Assert.assertTrue(res.isSuccess());
     Assert.assertEquals("Branch is deleted!", res.getMessage());

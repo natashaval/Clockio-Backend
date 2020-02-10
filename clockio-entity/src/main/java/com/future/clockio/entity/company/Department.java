@@ -1,6 +1,5 @@
 package com.future.clockio.entity.company;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.clockio.entity.constant.DocumentName;
 import lombok.AllArgsConstructor;

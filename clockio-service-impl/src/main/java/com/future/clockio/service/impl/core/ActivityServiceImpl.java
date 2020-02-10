@@ -11,6 +11,7 @@ import com.future.clockio.request.core.StatusRequest;
 import com.future.clockio.response.base.BaseResponse;
 import com.future.clockio.service.company.EmployeeService;
 import com.future.clockio.service.core.ActivityService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,13 +26,14 @@ import java.util.UUID;
 @Service
 public class ActivityServiceImpl implements ActivityService {
 
-  @Autowired
   private ObjectMapper mapper;
   private ActivityRepository activityRepository;
   private EmployeeService employeeService;
 
   @Autowired
-  public ActivityServiceImpl(ActivityRepository activityRepository, EmployeeService employeeService) {
+  public ActivityServiceImpl(ObjectMapper mapper, ActivityRepository activityRepository,
+                             EmployeeService employeeService) {
+    this.mapper = mapper;
     this.activityRepository = activityRepository;
     this.employeeService = employeeService;
   }
@@ -47,17 +49,21 @@ public class ActivityServiceImpl implements ActivityService {
 
   @Override
   public BaseResponse updateActivity(UUID id, ActivityRequest request) {
-    Optional.of(id)
-            .map(activityRepository::findById)
-            .orElseThrow(() -> new DataNotFoundException("Activity not found!"))
-            .map(exist -> this.copyProperties(request, exist))
-            .map(activityRepository::save);
+    Activity activity = findById(id);
+    activity = copyProperties(request, activity);
+    activityRepository.save(activity);
     return BaseResponse.success("Activity updated!");
   }
 
   @Override
+  public Activity findById(UUID id) {
+    Activity activity = activityRepository.findById(id)
+            .orElseThrow(() -> new DataNotFoundException("Activity not found!"));
+    return activity;
+  }
+
+  @Override
   public Page<Activity> findAllPageable(UUID employeeId, int page, int size) {
-//    return activityRepository.findTop5ByEmployee_IdOrderByStartTimeDesc(employeeId);
     return activityRepository.findAllByEmployee_IdOrderByDateDesc(employeeId,
             PageRequest.of(page, size));
   }
@@ -69,23 +75,27 @@ public class ActivityServiceImpl implements ActivityService {
 
   @Override
   public Page<Activity> findByEmployeeAndDateBetween(UUID employeeId, Date start, Date end, int page, int size) {
-    return activityRepository.findAllByEmployee_IdAndDateBetween(employeeId, start, end,
-            PageRequest.of(page, size));
+    DateTime startDateTime = new DateTime(start).withTime(0,0,0,0);
+    DateTime endDateTime = new DateTime(end).withTime(23,59,59,999);
+    return activityRepository.findAllByEmployee_IdAndDateBetween(employeeId,
+            startDateTime.toDate(), endDateTime.toDate(), PageRequest.of(page, size));
   }
 
   @Override
   public Page<Activity> findAll(int page, int size) {
-    return activityRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,
+    return activityRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,
             "date")));
   }
 
   @Override
   public BaseResponse deleteActivity(UUID id) {
-    Activity activity =
-            activityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Activity" +
-                    " not found!"));
-    activityRepository.delete(activity);
-    return BaseResponse.success("Activity deleted!");
+    Boolean exist = activityRepository.existsById(id);
+    if (exist) {
+      activityRepository.deleteById(id);
+      return BaseResponse.success("Activity deleted!");
+    } else {
+      throw new DataNotFoundException("Activity not found!");
+    }
   }
 
   private Activity copyProperties(ActivityRequest source, Activity target) {

@@ -31,15 +31,10 @@ public class Activity extends BaseEntity {
   private Employee employee;
 
   private String title;
-
   private String content;
-
   private Date date;
-
   private String startTime;
-
   private String endTime;
-
   private double latitude;
   private double longitude;
 }

@@ -28,9 +28,6 @@ import java.util.Map;
 @Slf4j
 public class ImageServiceImpl implements ImageService {
 
-  @Autowired
-  private ObjectMapper mapper;
-
   private CommandExecutorService commandExecutor;
   private PhotoRepository photoRepository;
   private EmployeeService employeeService;
@@ -52,7 +49,7 @@ public class ImageServiceImpl implements ImageService {
     ImageUploadResponse imageResponse =
             commandExecutor.executeCommand(ImageUploadCommand.class, request);
     log.info("Image Upload Response" + imageResponse);
-    Photo photo = mapper.convertValue(imageResponse, Photo.class);
+    Photo photo = new Photo();
     photo.setUrl(imageResponse.getUrl());
     photo.setPublicId(imageResponse.getPublicId());
     photo.setEmployee(employee);
@@ -68,6 +65,7 @@ public class ImageServiceImpl implements ImageService {
   public BaseResponse destroyImage(ImageDestroyRequest request) {
     log.info("Image Destroy request" + request);
     ImageDestroyResponse response = commandExecutor.executeCommand(ImageDestroyCommand.class, request);
+    log.info("image destroy response {}", response);
 //    response.getDeleted().forEach((k,v) -> {
 //      if (v.equals("deleted")) {
 //        if (employee.getPhotoUrl().contains(k)) employee.getPhotoUrl().remove(k);

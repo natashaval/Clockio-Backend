@@ -20,7 +20,7 @@ public class ActivityController {
   private ActivityService activityService;
 
   @GetMapping
-  public Page<Activity> findAll(@RequestParam("page") int page,
+  public Page<Activity> activityFindAll(@RequestParam("page") int page,
                                 @RequestParam("size") int size) {
     return activityService.findAll(page, size);
   }

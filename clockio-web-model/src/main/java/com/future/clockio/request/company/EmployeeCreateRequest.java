@@ -1,10 +1,14 @@
 package com.future.clockio.request.company;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeCreateRequest {
   private String firstName;
   private String lastName;

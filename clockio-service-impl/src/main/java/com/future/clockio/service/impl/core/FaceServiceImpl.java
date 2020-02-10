@@ -71,8 +71,8 @@ public class FaceServiceImpl implements FaceService {
     destroyRequest.setByTag(false);
     deleteImage(destroyRequest);
 
-    return (isSimilar) ? BaseResponse.success("Face Match!") :
-            BaseResponse.failed("Face Not Match!");
+    return (isSimilar) ? BaseResponse.success("Face match!") :
+            BaseResponse.failed("Face not match!");
   }
 
   @Override
@@ -99,7 +99,7 @@ public class FaceServiceImpl implements FaceService {
               new AddFaceRequest(url));
       log.info("Image Public ID: " + response.get(0).getFaceId());
     } catch (Exception e) {
-      throw new InvalidRequestException("Failed in Face Detect!");
+      throw new InvalidRequestException("Failed in face detect!");
     }
     return response.get(0).getFaceId();
   }
@@ -127,9 +127,9 @@ public class FaceServiceImpl implements FaceService {
               commandExecutor.executeCommand(ImageDestroyCommand.class, request);
       log.info("Delete image: " + destroyResponse.getPartial());
     } catch (Exception e) {
-      throw new InvalidRequestException("Failed in Delete Image!");
+      throw new InvalidRequestException("Failed in delete image!");
     }
-    BaseResponse response = BaseResponse.success("Image Deleted");
+    BaseResponse response = BaseResponse.success("Image deleted!");
     response.setData(destroyResponse);
     return response;
   }
